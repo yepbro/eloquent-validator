@@ -1,0 +1,46 @@
+{
+  "name": "yepbro/eloquent-validator",
+  "description": "A Laravel package to add validation methods directly to Eloquent models",
+  "authors": [
+    {
+      "name": "Denis aka YepBro",
+      "email": "denis@yepbro.ru"
+    }
+  ],
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "eloquent",
+    "validator",
+    "laravel",
+    "validation"
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^8.4",
+    "illuminate/database": "*",
+    "illuminate/support": "*",
+    "illuminate/validation": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "orchestra/testbench": "^9.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "YepBro\\EloquentValidator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "YepBro\\EloquentValidator\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "YepBro\\EloquentValidator\\EloquentValidatorServiceProvider"
+      ]
+    }
+  }
+}
