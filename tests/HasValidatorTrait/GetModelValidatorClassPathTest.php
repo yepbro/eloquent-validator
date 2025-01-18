@@ -27,6 +27,19 @@ class GetModelValidatorClassPathTest extends UnitTestCase
         $this->assertSame($validatorClass, $class->callMethod('getModelValidatorClass', $modelClass));
     }
 
+    #[TestWith(['App\Models\Admin', 'App\Validators\UserValidator'])]
+    #[TestDox('$modelClass => $validatorClass')]
+    public function test_defined_validator_class_property(string $modelClass, string $validatorClass): void
+    {
+        $class = new class {
+            use CallProtectedMethods, HasValidator;
+
+            protected $validatorClass = 'App\Validators\UserValidator';
+        };
+
+        $this->assertSame($validatorClass, $class->callMethod('getModelValidatorClass', $modelClass));
+    }
+
     /**
      * @throws Exception
      */

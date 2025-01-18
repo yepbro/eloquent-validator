@@ -6,41 +6,45 @@ use Illuminate\Database\Eloquent\Model;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\HasValidatorTrait\GetModelValidatorClassPathTest;
+use YepBro\EloquentValidator\Tests\HasValidatorTrait\GetValidatorInstanceTest;
 
+/**
+ * @property string<class-string> $validatorClass
+ */
 trait HasValidator
 {
-    /**
-     * @var string<class-string>
-     */
-    protected string $validatorClass;
-
     private ModelValidator $validatorInstance;
 
     /**
      * @throws ModelValidatorNotFound
+     * @see GetValidatorInstanceTest
      */
     public function getValidatorInstance(): ModelValidator
     {
-        $this->validatorClass ??= $this->getModelValidatorClass(get_class($this));
-
-        if (!class_exists($this->validatorClass)) {
-            throw new ModelValidatorNotFound($this::class);
-        }
-
         if (!isset($this->validatorInstance)) {
-            $this->validatorInstance = new $this->validatorClass;
+            $validatorClass = $this->getModelValidatorClass(get_class($this));
+
+            if (!class_exists($validatorClass)) {
+                throw new ModelValidatorNotFound($validatorClass);
+            }
+
+            $this->validatorInstance = new $validatorClass;
         }
 
         return $this->validatorInstance;
     }
 
     /**
-     * Получить класс валидатора по имени модели (с учетом вложенности)
+     * Получить класс валидатора по имени модели (с учетом вложенности) или его предустановленное значение
      *
      * @see GetModelValidatorClassPathTest
      */
     protected function getModelValidatorClass(string $modelPath): string
     {
+        if (isset($this->validatorClass)) {
+            return $this->validatorClass;
+        }
+
         $modelNamespace = $this->getModelNamespace();
 
         $validatorNamespace = $this->getModelValidatorNamespace();
