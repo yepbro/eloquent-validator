@@ -1,0 +1,87 @@
+<?php
+
+namespace YepBro\EloquentValidator;
+
+use Illuminate\Database\Eloquent\Model;
+use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
+use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
+use YepBro\EloquentValidator\Tests\HasValidatorTrait\GetModelValidatorClassPathTest;
+
+trait HasValidator
+{
+    /**
+     * @var string<class-string>
+     */
+    protected string $validatorClass;
+
+    private ModelValidator $validatorInstance;
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    public function getValidatorInstance(): ModelValidator
+    {
+        $this->validatorClass ??= $this->getModelValidatorClass(get_class($this));
+
+        if (!class_exists($this->validatorClass)) {
+            throw new ModelValidatorNotFound($this::class);
+        }
+
+        if (!isset($this->validatorInstance)) {
+            $this->validatorInstance = new $this->validatorClass;
+        }
+
+        return $this->validatorInstance;
+    }
+
+    /**
+     * Получить класс валидатора по имени модели (с учетом вложенности)
+     *
+     * @see GetModelValidatorClassPathTest
+     */
+    protected function getModelValidatorClass(string $modelPath): string
+    {
+        return '';
+    }
+
+    /**
+     * @throws ModelNotValidated
+     */
+    public function validate(): void
+    {
+        throw new ModelNotValidated;
+    }
+
+    public function fails(): bool
+    {
+        return true;
+    }
+
+    public function saveWithoutValidation(): Model
+    {
+        return parent::save();
+    }
+
+    public function saveWithValidation(): Model
+    {
+        return parent::save();
+    }
+
+    /**
+     * Получить пространство имен для моделей
+     * TODO: from config
+     */
+    protected function getModelNamespace(): string
+    {
+        return "App\\Models\\";
+    }
+
+    /**
+     * Получить пространство имен для валидаторов
+     * TODO: from config
+     */
+    protected function getModelValidatorNamespace(): string
+    {
+        return "App\\Validators\\";
+    }
+}
