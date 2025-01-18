@@ -14,9 +14,9 @@ use YepBro\EloquentValidator\Tests\UnitTestCase;
 #[CoversMethod(HasValidator::class, 'getModelValidatorClassPath')]
 class GetModelValidatorClassPathTest extends UnitTestCase
 {
-    #[TestWith(['App\Models\User', 'App\Validators\UserValidator'])]
-    #[TestWith(['App\Models\Users\Manager', 'App\Validators\Users\ManagerValidator'])]
-    #[TestWith(['App\Models\Users\Admins\RootUser', 'App\Validators\Users\Admins\RootUserValidator'])]
+    #[TestWith(['App\Models\User', 'App\ModelValidators\UserValidator'])]
+    #[TestWith(['App\Models\Users\Manager', 'App\ModelValidators\Users\ManagerValidator'])]
+    #[TestWith(['App\Models\Users\Admins\RootUser', 'App\ModelValidators\Users\Admins\RootUserValidator'])]
     #[TestDox('$modelClass => $validatorClass')]
     public function test_models_and_validators_in_default_folder(string $modelClass, string $validatorClass): void
     {
@@ -27,14 +27,14 @@ class GetModelValidatorClassPathTest extends UnitTestCase
         $this->assertSame($validatorClass, $class->callMethod('getModelValidatorClass', $modelClass));
     }
 
-    #[TestWith(['App\Models\Admin', 'App\Validators\UserValidator'])]
+    #[TestWith(['App\Models\Admin', 'App\ModelValidators\UserValidator'])]
     #[TestDox('$modelClass => $validatorClass')]
     public function test_defined_validator_class_property(string $modelClass, string $validatorClass): void
     {
         $class = new class {
             use CallProtectedMethods, HasValidator;
 
-            protected $validatorClass = 'App\Validators\UserValidator';
+            protected $validatorClass = 'App\ModelValidators\UserValidator';
         };
 
         $this->assertSame($validatorClass, $class->callMethod('getModelValidatorClass', $modelClass));

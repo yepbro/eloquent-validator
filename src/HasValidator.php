@@ -90,6 +90,6 @@ trait HasValidator
      */
     protected function getModelValidatorNamespace(): string
     {
-        return "App\\Validators\\";
+        return "App\\ModelValidators\\";
     }
 }
