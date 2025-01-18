@@ -36,6 +36,10 @@
       "YepBro\\EloquentValidator\\Tests\\": "tests/"
     }
   },
+  "scripts": {
+    "test": "vendor/bin/phpunit tests",
+    "testdox": "vendor/bin/phpunit tests --no-progress --testdox"
+  },
   "extra": {
     "laravel": {
       "providers": [
