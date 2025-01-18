@@ -41,7 +41,11 @@ trait HasValidator
      */
     protected function getModelValidatorClass(string $modelPath): string
     {
-        return '';
+        $modelNamespace = $this->getModelNamespace();
+
+        $validatorNamespace = $this->getModelValidatorNamespace();
+
+        return str_replace($modelNamespace, $validatorNamespace, $modelPath) . 'Validator';
     }
 
     /**
