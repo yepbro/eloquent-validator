@@ -1,15 +1,15 @@
 <?php
 
-namespace YepBro\EloquentValidator\Tests\HasValidatorTrait;
+namespace YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait;
 
 use PHPUnit\Framework\Attributes\CoversMethod;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\MockObject\Exception;
 use YepBro\EloquentValidator\HasValidator;
-use YepBro\EloquentValidator\Tests\Mocks\CallProtectedMethods;
-use YepBro\EloquentValidator\Tests\Mocks\MockModel;
-use YepBro\EloquentValidator\Tests\UnitTestCase;
+use YepBro\EloquentValidator\Tests\Unit\Mocks\CallProtectedMethods;
+use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModel;
+use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 
 #[CoversMethod(HasValidator::class, 'getModelValidatorClassPath')]
 class GetModelValidatorClassPathTest extends UnitTestCase

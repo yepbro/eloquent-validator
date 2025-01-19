@@ -1,6 +1,6 @@
 <?php
 
-namespace YepBro\EloquentValidator\Tests;
+namespace YepBro\EloquentValidator\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 

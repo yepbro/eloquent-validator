@@ -1,6 +1,6 @@
 <?php
 
-namespace YepBro\EloquentValidator\Tests\Mocks;
+namespace YepBro\EloquentValidator\Tests\Unit\Mocks;
 
 use YepBro\EloquentValidator\ModelValidator;
 
