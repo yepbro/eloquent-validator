@@ -19,7 +19,7 @@ trait HasValidator
      * @throws ModelValidatorNotFound
      * @see GetValidatorInstanceTest
      */
-    public function getValidatorInstance(): ModelValidator
+    public function getModelValidatorInstance(): ModelValidator
     {
         if (!isset($this->validatorInstance)) {
             $validatorClass = $this->getModelValidatorClass(get_class($this));
@@ -28,7 +28,7 @@ trait HasValidator
                 throw new ModelValidatorNotFound($validatorClass);
             }
 
-            $this->validatorInstance = new $validatorClass;
+            $this->validatorInstance = new $validatorClass($this);
         }
 
         return $this->validatorInstance;
@@ -53,16 +53,47 @@ trait HasValidator
     }
 
     /**
+     * @throws ModelValidatorNotFound
      * @throws ModelNotValidated
      */
     public function validate(): void
     {
-        throw new ModelNotValidated;
+        $this->getModelValidatorInstance()->validate();
     }
 
-    public function fails(): bool
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    public function validationFails(): bool
     {
-        return true;
+        return $this->getModelValidatorInstance()->fails();
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    public function validationPasses(): bool
+    {
+        return $this->getModelValidatorInstance()->passes();
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    public function getValidationErrors(): array
+    {
+        return $this->getModelValidatorInstance()->getErrorsAsArray();
+    }
+
+
+    /**
+     * @param int $options Options for json_encode. Default: JSON_UNESCAPED_UNICODE
+     * @return string
+     * @throws ModelValidatorNotFound
+     */
+    public function getValidationErrorsAsJson(int $options = JSON_UNESCAPED_UNICODE): string
+    {
+        return $this->getModelValidatorInstance()->getErrorsAsJson($options);
     }
 
     public function saveWithoutValidation(): Model
