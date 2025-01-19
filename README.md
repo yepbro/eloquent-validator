@@ -9,7 +9,7 @@
 ### Installation
 
 ```shell
-composer yepbro/eloquent-validatorClass
+composer yepbro/eloquent-validator
 ```
 
 ## Development
