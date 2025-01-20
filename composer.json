@@ -43,6 +43,7 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit tests",
+    "coverage-text": "vendor/bin/phpunit tests --coverage-text",
     "testdox": "vendor/bin/phpunit tests --no-progress --testdox"
   },
   "extra": {
