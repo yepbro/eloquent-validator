@@ -1,10 +1,13 @@
 {
   "name": "yepbro/eloquent-validator",
+  "version": "0.0.1",
   "description": "A Laravel package to add validation methods directly to Eloquent models",
+  "homepage": "https://yepbro.ru",
   "authors": [
     {
       "name": "Denis aka YepBro",
-      "email": "denis@yepbro.ru"
+      "email": "denis@yepbro.ru",
+      "homepage": "https://yepbro.ru"
     }
   ],
   "type": "library",

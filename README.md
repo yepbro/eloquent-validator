@@ -14,6 +14,17 @@ composer yepbro/eloquent-validator
 
 ## Development
 
+### Docker
+
+Used [Composer PHP docker image](https://github.com/devgine/composer-php) with xdebug, phpunit, phpstan, psalm, phpcs,
+php-cs-fixer, phpmd, phpcpd and rector.
+
+```shell
+docker-compose build --no-cache
+docker-compose up
+docker exec -t -i eloquent-validator-php /bin/bash
+```
+
 ### Tests
 
 Run tests
