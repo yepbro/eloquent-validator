@@ -22,9 +22,11 @@
   "require": {
     "php": "^8.4",
     "illuminate/database": "*",
+    "illuminate/events": "*",
     "illuminate/support": "*",
     "illuminate/validation": "*",
-    "illuminate/translation": "*"
+    "illuminate/translation": "*",
+    "illuminate/filesystem": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^11.0"

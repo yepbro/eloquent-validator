@@ -5,8 +5,8 @@ namespace YepBro\EloquentValidator;
 use Illuminate\Database\Eloquent\Model;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
-use YepBro\EloquentValidator\Tests\HasValidatorTrait\GetModelValidatorClassPathTest;
-use YepBro\EloquentValidator\Tests\HasValidatorTrait\GetValidatorInstanceTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
 
 /**
  * @property string<class-string> $validatorClass

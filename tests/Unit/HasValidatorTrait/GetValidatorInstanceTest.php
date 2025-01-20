@@ -4,6 +4,7 @@ namespace YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait;
 
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\Exception;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\HasValidator;
@@ -13,6 +14,7 @@ use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModelValidator;
 use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 
 #[CoversMethod(HasValidator::class, 'getModelValidatorInstance')]
+#[Group('HasValidatorTrait')]
 class GetValidatorInstanceTest extends UnitTestCase
 {
     public function test_validator_not_found(): void

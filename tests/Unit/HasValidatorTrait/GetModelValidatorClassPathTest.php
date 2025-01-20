@@ -3,15 +3,17 @@
 namespace YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait;
 
 use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\MockObject\Exception;
 use YepBro\EloquentValidator\HasValidator;
-use YepBro\EloquentValidator\Tests\Unit\Mocks\CallProtectedMethods;
+use YepBro\EloquentValidator\Tests\Unit\Mocks\MagicalAccessTrait;
 use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModel;
 use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 
 #[CoversMethod(HasValidator::class, 'getModelValidatorClassPath')]
+#[Group('HasValidatorTrait')]
 class GetModelValidatorClassPathTest extends UnitTestCase
 {
     #[TestWith(['App\Models\User', 'App\ModelValidators\UserValidator'])]
@@ -21,10 +23,10 @@ class GetModelValidatorClassPathTest extends UnitTestCase
     public function test_models_and_validators_in_default_folder(string $modelClass, string $validatorClass): void
     {
         $class = new class {
-            use CallProtectedMethods, HasValidator;
+            use MagicalAccessTrait, HasValidator;
         };
 
-        $this->assertSame($validatorClass, $class->callMethod('getModelValidatorClass', $modelClass));
+        $this->assertSame($validatorClass, $class->magicCallMethod('getModelValidatorClass', $modelClass));
     }
 
     #[TestWith(['App\Models\Admin', 'App\ModelValidators\UserValidator'])]
@@ -32,12 +34,12 @@ class GetModelValidatorClassPathTest extends UnitTestCase
     public function test_defined_validator_class_property(string $modelClass, string $validatorClass): void
     {
         $class = new class {
-            use CallProtectedMethods, HasValidator;
+            use MagicalAccessTrait, HasValidator;
 
             protected $validatorClass = 'App\ModelValidators\UserValidator';
         };
 
-        $this->assertSame($validatorClass, $class->callMethod('getModelValidatorClass', $modelClass));
+        $this->assertSame($validatorClass, $class->magicCallMethod('getModelValidatorClass', $modelClass));
     }
 
     /**
@@ -55,6 +57,6 @@ class GetModelValidatorClassPathTest extends UnitTestCase
             ->method('getModelValidatorNamespace')
             ->willReturn("App\\Models\\Validators\\");
 
-        $this->assertSame($validatorClass, $mock->callMethod('getModelValidatorClass', $modelClass));
+        $this->assertSame($validatorClass, $mock->magicCallMethod('getModelValidatorClass', $modelClass));
     }
 }

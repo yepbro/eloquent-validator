@@ -27,10 +27,13 @@ docker exec -t -i eloquent-validator-php /bin/bash
 
 ### Tests
 
-Run tests
+You can use any of the commands to run the tests.
 
 ```shell
 vendor/bin/phpunit tests/
+composer run test
+composer run testdox
+composer run testdox -- --filter=ClearValidatorTest
 ```
 
 ## Different
