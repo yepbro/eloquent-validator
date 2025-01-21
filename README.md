@@ -21,8 +21,19 @@ php-cs-fixer, phpmd, phpcpd and rector.
 
 ```shell
 docker-compose build --no-cache
+
 docker-compose up
 docker exec -t -i eloquent-validator-php /bin/bash
+
+composer run up
+composer run bash
+```
+
+### PhpStan
+
+```shell
+cp phpstan.neon.dist phpstan.neon
+composer run phpstan
 ```
 
 ### Tests
@@ -34,6 +45,7 @@ vendor/bin/phpunit tests/
 composer run test
 composer run testdox
 composer run testdox -- --filter=ClearValidatorTest
+composer run coverage-text
 ```
 
 ## Different
