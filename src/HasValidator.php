@@ -10,12 +10,15 @@ use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTe
 
 /**
  * @property string<class-string> $validatorClass
+ * @mixin Model
  */
 trait HasValidator
 {
     private ModelValidator $validatorInstance;
 
     /**
+     * Получить инстанс валидатора модели
+     *
      * @throws ModelValidatorNotFound
      * @see GetValidatorInstanceTest
      */
@@ -35,7 +38,7 @@ trait HasValidator
     }
 
     /**
-     * Получить класс валидатора по имени модели (с учетом вложенности) или его предустановленное значение
+     * Получить имя класса валидатора по имени модели (с учетом вложенности) или на основе предустановленного значения
      *
      * @see GetModelValidatorClassPathTest
      */
@@ -53,6 +56,8 @@ trait HasValidator
     }
 
     /**
+     * Проверить данные, если есть ошибка, то выбросить исключение
+     *
      * @throws ModelValidatorNotFound
      * @throws ModelNotValidated
      */
@@ -62,6 +67,8 @@ trait HasValidator
     }
 
     /**
+     * Проверить, что есть ошибки валидации
+     *
      * @throws ModelValidatorNotFound
      */
     public function validationFails(): bool
@@ -70,6 +77,8 @@ trait HasValidator
     }
 
     /**
+     * Проверить, что валидация прошла успешно
+     *
      * @throws ModelValidatorNotFound
      */
     public function validationPasses(): bool
@@ -78,6 +87,8 @@ trait HasValidator
     }
 
     /**
+     * Получить массив ошибок валидации
+     *
      * @throws ModelValidatorNotFound
      */
     public function getValidationErrors(): array
@@ -85,8 +96,9 @@ trait HasValidator
         return $this->getModelValidatorInstance()->getErrorsAsArray();
     }
 
-
     /**
+     * Получить ошибки валидации в виде json-строки
+     *
      * @param int $options Options for json_encode. Default: JSON_UNESCAPED_UNICODE
      * @return string
      * @throws ModelValidatorNotFound
@@ -96,18 +108,24 @@ trait HasValidator
         return $this->getModelValidatorInstance()->getErrorsAsJson($options);
     }
 
-    public function saveWithoutValidation(): Model
-    {
-        return parent::save();
-    }
-
-    public function saveWithValidation(): Model
+    /**
+     * Сохранить модель без предварительной валидации (когда режим обязательной валидации включен)
+     */
+    public function saveWithoutValidation(): bool
     {
         return parent::save();
     }
 
     /**
-     * Получить пространство имен для моделей
+     * Сохранить модель с предварительной валидации (когда режим обязательной валидации выключен)
+     */
+    public function saveWithValidation(): bool
+    {
+        return parent::save();
+    }
+
+    /**
+     * Получить пространство имен для моделей приложения
      * TODO: from config
      */
     protected function getModelNamespace(): string
@@ -116,7 +134,7 @@ trait HasValidator
     }
 
     /**
-     * Получить пространство имен для валидаторов
+     * Получить пространство имен для валидаторов приложения
      * TODO: from config
      */
     protected function getModelValidatorNamespace(): string

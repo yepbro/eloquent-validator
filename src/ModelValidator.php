@@ -38,13 +38,19 @@ abstract class ModelValidator
         //
     }
 
-    /** uncovered */
+    /**
+     * Создать новый инстанс Laravel-валидатора
+     */
     protected function validatorFactory(): Factory
     {
         return ValidatorFacade::getFacadeRoot();
     }
 
-    /** @see GetValidatorTest */
+    /**
+     * Получить инстанс Laravel-валидатора с заполненными данными
+     *
+     * @see GetValidatorTest
+     */
     public function getValidator(): Validator
     {
         if (!isset($this->validator)) {
@@ -60,6 +66,8 @@ abstract class ModelValidator
     }
 
     /**
+     * Проверить данные, если есть ошибка, то выбросить исключение
+     *
      * @throws ModelNotValidated
      * @see ValidateTest
      */
@@ -72,31 +80,51 @@ abstract class ModelValidator
         }
     }
 
-    /** @see PassesTest */
+    /**
+     * Проверить, что валидация прошла успешно
+     *
+     * @see PassesTest
+     */
     public function passes(): bool
     {
         return $this->getValidator()->passes();
     }
 
-    /** @see FailsTest */
+    /**
+     * Проверить, что есть ошибки валидации
+     *
+     * @see FailsTest
+     */
     public function fails(): bool
     {
         return $this->getValidator()->fails();
     }
 
-    /**  @see GetErrorsAsArrayTest */
+    /**
+     * Получить массив с ошибками валидации
+     *
+     * @see GetErrorsAsArrayTest
+     */
     public function getErrorsAsArray(): array
     {
         return $this->getValidator()->errors()->toArray();
     }
 
-    /** @see GetErrorsAsJsonTest */
+    /**
+     * Получить json-строку с ошибками валидации
+     *
+     * @see GetErrorsAsJsonTest
+     */
     public function getErrorsAsJson(int $options = 0): string
     {
         return $this->getValidator()->errors()->toJson($options);
     }
 
-    /** @see GetActionRulesTest */
+    /**
+     * Получить массив с правилами валидации для определенного типа операции с моделью (создание или обновление)
+     *
+     * @see GetActionRulesTest
+     */
     protected function getActionRules(?ActionEnum $action = null): array
     {
         $rules = ($action && $action === ActionEnum::UPDATE) || ($action === null && $this->model->exists)
@@ -106,7 +134,13 @@ abstract class ModelValidator
         return array_filter(array_merge($this->getRules(), $rules));
     }
 
-    /** @see GetModelDataTest */
+    /**
+     * Получить данные модели для полей участвующих в валидации
+     *
+     * Тип операции определяется по переданному аргументу или, если он отсутствует, по свойству exists модели
+     *
+     * @see GetModelDataTest
+     */
     protected function getModelData(): array
     {
         return array_combine(
@@ -115,7 +149,13 @@ abstract class ModelValidator
         );
     }
 
-    /** @see GetRulesKeysTest */
+    /**
+     * Получить массив ключей правил валидации для определенного типа операции с моделью (создание или обновление)
+     *
+     * Тип операции определяется по переданному аргументу или, если он отсутствует, по свойству exists модели
+     *
+     * @see GetRulesKeysTest
+     */
     protected function getUsedRulesKeys(?ActionEnum $action = null): array
     {
         return array_keys($this->getActionRules($action));
