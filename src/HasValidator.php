@@ -12,6 +12,7 @@ use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTe
 /**
  * @property string<class-string> $validatorClass
  * @mixin Model
+ * @phpstan-ignore trait.unused
  */
 trait HasValidator
 {

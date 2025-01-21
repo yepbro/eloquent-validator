@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace YepBro\EloquentValidator;
 
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Illuminate\Validation\Factory;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
@@ -22,14 +23,19 @@ use YepBro\EloquentValidator\Tests\Unit\ModelValidator\ValidateTest;
 
 abstract class ModelValidator
 {
+    /** @var array<string, string|array<int, string|Rule|ValidationRule>> */
     protected array $rules = [];
 
+    /** @var array<string, string|array<int, string|Rule|ValidationRule>> */
     protected array $updateRules = [];
 
+    /** @var array<string, string|array<int, string|Rule|ValidationRule>> */
     protected array $createRules = [];
 
+    /** @var array<string, string> */
     protected array $messages = [];
 
+    /** @var array<string, string> */
     protected array $attributes = [];
 
     protected Validator $validator;
@@ -44,6 +50,7 @@ abstract class ModelValidator
      */
     protected function validatorFactory(): Factory
     {
+        // @phpstan-ignore return.type
         return ValidatorFacade::getFacadeRoot();
     }
 
@@ -104,6 +111,7 @@ abstract class ModelValidator
     /**
      * Получить массив с ошибками валидации
      *
+     * @return array<string, string[]>
      * @see GetErrorsAsArrayTest
      */
     public function getErrorsAsArray(): array
@@ -124,6 +132,7 @@ abstract class ModelValidator
     /**
      * Получить массив с правилами валидации для определенного типа операции с моделью (создание или обновление)
      *
+     * @return array<string, string|array<int, string|Rule|ValidationRule>>
      * @see GetActionRulesTest
      */
     protected function getActionRules(?ActionEnum $action = null): array
@@ -140,6 +149,7 @@ abstract class ModelValidator
      *
      * Тип операции определяется по переданному аргументу или, если он отсутствует, по свойству exists модели
      *
+     * @return array<string, mixed>
      * @see GetModelDataTest
      */
     protected function getModelData(): array
@@ -155,6 +165,7 @@ abstract class ModelValidator
      *
      * Тип операции определяется по переданному аргументу или, если он отсутствует, по свойству exists модели
      *
+     * @return string[]
      * @see GetRulesKeysTest
      */
     protected function getUsedRulesKeys(?ActionEnum $action = null): array
@@ -174,13 +185,19 @@ abstract class ModelValidator
      * ================================================================================================================
      */
 
-    /** @see PropertiesTest */
+    /**
+     * @return array<string, string|array<int, string|Rule|ValidationRule>>
+     * @see PropertiesTest
+     */
     public function getRules(): array
     {
         return $this->rules;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @param array<string, string|array<int, string|Rule|ValidationRule>> $rules
+     * @see PropertiesTest
+     */
     public function setRules(array $rules): ModelValidator
     {
         $this->rules = $rules;
@@ -188,10 +205,13 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
-    public function addRule(string $key, string|array|Rule $rules): ModelValidator
+    /**
+     * @param string|Rule|ValidationRule|array<int, string|Rule|ValidationRule> $rules
+     * @see PropertiesTest
+     */
+    public function addRule(string $key, string|array|Rule|ValidationRule $rules): ModelValidator
     {
-        $this->rules = array_merge($this->rules, [$key => $rules]);
+        $this->rules = array_merge($this->rules, [$key => $this->parseRules($rules)]);
         $this->clearValidator();
         return $this;
     }
@@ -204,13 +224,19 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @return array<string, string|array<int, string|Rule|ValidationRule>>
+     * @see PropertiesTest
+     */
     public function getUpdateRules(): array
     {
         return $this->updateRules;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @param array<string, string|array<int, string|Rule|ValidationRule>> $updateRules
+     * @see PropertiesTest
+     */
     public function setUpdateRules(array $updateRules): ModelValidator
     {
         $this->updateRules = $updateRules;
@@ -218,10 +244,13 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
-    public function addUpdateRule(string $key, string|array|Rule $rules): ModelValidator
+    /**
+     * @param string|Rule|ValidationRule|array<int, string|Rule|ValidationRule> $rules
+     * @see PropertiesTest
+     */
+    public function addUpdateRule(string $key, string|array|Rule|ValidationRule $rules): ModelValidator
     {
-        $this->updateRules = array_merge($this->updateRules, [$key => $rules]);
+        $this->updateRules = array_merge($this->updateRules, [$key => $this->parseRules($rules)]);
         $this->clearValidator();
         return $this;
     }
@@ -234,13 +263,19 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @return array<string, string|array<int, string|Rule|ValidationRule>>
+     * @see PropertiesTest
+     */
     public function getCreateRules(): array
     {
         return $this->createRules;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @param array<string, string|array<int, string|Rule|ValidationRule>> $createRules
+     * @see PropertiesTest
+     */
     public function setCreateRules(array $createRules): ModelValidator
     {
         $this->createRules = $createRules;
@@ -248,10 +283,13 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
-    public function addCreateRule(string $key, string|array|Rule $rules): ModelValidator
+    /**
+     * @param string|Rule|ValidationRule|array<int, string|Rule|ValidationRule> $rules
+     * @see PropertiesTest
+     */
+    public function addCreateRule(string $key, string|array|Rule|ValidationRule $rules): ModelValidator
     {
-        $this->createRules = array_merge($this->createRules, [$key => $rules]);
+        $this->createRules = array_merge($this->createRules, [$key => $this->parseRules($rules)]);
         $this->clearValidator();
         return $this;
     }
@@ -264,13 +302,19 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @return array<string, string>
+     * @see PropertiesTest
+     */
     public function getMessages(): array
     {
         return $this->messages;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @param array<string, string> $messages
+     * @see PropertiesTest
+     */
     public function setMessages(array $messages): ModelValidator
     {
         $this->messages = $messages;
@@ -278,10 +322,12 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
-    public function addMessage(string $key, string|array|Rule $rules): ModelValidator
+    /**
+     * @see PropertiesTest
+     */
+    public function addMessage(string $key, string $value): ModelValidator
     {
-        $this->messages = array_merge($this->messages, [$key => $rules]);
+        $this->messages = array_merge($this->messages, [$key => $value]);
         $this->clearValidator();
         return $this;
     }
@@ -294,13 +340,19 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @return array<string, string>
+     * @see PropertiesTest
+     */
     public function getAttributes(): array
     {
         return $this->attributes;
     }
 
-    /** @see PropertiesTest */
+    /**
+     * @param array<string, string> $attributes
+     * @see PropertiesTest
+     */
     public function setAttributes(array $attributes): ModelValidator
     {
         $this->attributes = $attributes;
@@ -308,10 +360,12 @@ abstract class ModelValidator
         return $this;
     }
 
-    /** @see PropertiesTest */
-    public function addAttribute(string $key, string|array|Rule $rules): ModelValidator
+    /**
+     * @see PropertiesTest
+     */
+    public function addAttribute(string $key, string $value): ModelValidator
     {
-        $this->attributes = array_merge($this->attributes, [$key => $rules]);
+        $this->attributes = array_merge($this->attributes, [$key => $value]);
         $this->clearValidator();
         return $this;
     }
@@ -322,5 +376,18 @@ abstract class ModelValidator
         $this->attributes = [];
         $this->clearValidator();
         return $this;
+    }
+
+    /**
+     * @param string|Rule|ValidationRule|array<int, string|Rule|ValidationRule> $rules
+     * @return array<int, string|Rule|ValidationRule>
+     */
+    protected function parseRules(string|array|Rule|ValidationRule $rules): array
+    {
+        return match (true) {
+            $rules instanceof Rule, $rules instanceof ValidationRule => [$rules],
+            is_string($rules) => explode('|', $rules),
+            default => $rules,
+        };
     }
 }

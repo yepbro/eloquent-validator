@@ -76,17 +76,42 @@ class PropertiesTest extends UnitTestCase
         $this->assertSame($value, (fn(): array => $obj->{$property})->call($obj));
     }
 
-    #[TestWith(['rules', ['name' => 'required'], 'addRule'])]
-    #[TestWith(['attributes', ['name' => 'required'], 'addAttribute'])]
-    #[TestWith(['messages', ['name' => 'required'], 'addMessage'])]
-    #[TestWith(['createRules', ['name' => 'required'], 'addCreateRule'])]
-    #[TestWith(['updateRules', ['name' => 'required'], 'addUpdateRule'])]
+    #[TestWith(['rules', 'addRule'])]
+    #[TestWith(['createRules', 'addCreateRule'])]
+    #[TestWith(['updateRules', 'addUpdateRule'])]
     #[TestDox('$method is ok')]
-    public function test_get_add_item_to_property(string $property, array $value, string $method): void
+    public function test_get_add_array_item_to_rules_property(string $property, string $method): void
     {
+        $value = ['name' => 'required'];
+        $obj = $this->getMockObject($property, $value);
+        $obj->$method('may_be', ['string']);
+        $expected = $value + ['may_be' => ['string']];
+        $this->assertSame($expected, (fn(): array => $obj->{$property})->call($obj));
+    }
+
+    #[TestWith(['rules', 'addRule'])]
+    #[TestWith(['createRules', 'addCreateRule'])]
+    #[TestWith(['updateRules', 'addUpdateRule'])]
+    #[TestDox('$method is ok')]
+    public function test_get_add_string_item_to_rules_property(string $property, string $method): void
+    {
+        $value = ['name' => 'required'];
         $obj = $this->getMockObject($property, $value);
         $obj->$method('may_be', 'string');
-        $this->assertSame($value + ['may_be' => 'string'], (fn(): array => $obj->{$property})->call($obj));
+        $expected = $value + ['may_be' => ['string']];
+        $this->assertSame($expected, (fn(): array => $obj->{$property})->call($obj));
+    }
+
+    #[TestWith(['attributes', 'addAttribute'])]
+    #[TestWith(['messages', 'addMessage'])]
+    #[TestDox('$method is ok')]
+    public function test_get_add_item_to_property(string $property, string $method): void
+    {
+        $value = ['name' => 'description'];
+        $obj = $this->getMockObject($property, $value);
+        $obj->$method('may_be', 'string');
+        $expected = $value + ['may_be' => 'string'];
+        $this->assertSame($expected, (fn(): array => $obj->{$property})->call($obj));
     }
 
     #[TestWith([['clearRules', 'clearAttributes', 'clearMessages', 'clearCreateRules', 'clearUpdateRules'], []])]
