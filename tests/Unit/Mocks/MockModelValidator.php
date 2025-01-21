@@ -12,7 +12,7 @@ class MockModelValidator extends ModelValidator
 {
     use MagicalAccessTrait;
 
-    protected function initValidator(): Factory
+    protected function validatorFactory(): Factory
     {
         $loader = new FileLoader(new Filesystem(), dirname(__FILE__) . '/lang');
         $loader->load('en', 'validation', 'lang');

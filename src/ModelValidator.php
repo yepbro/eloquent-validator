@@ -39,7 +39,7 @@ abstract class ModelValidator
     }
 
     /** uncovered */
-    protected function initValidator(): Factory
+    protected function validatorFactory(): Factory
     {
         return ValidatorFacade::getFacadeRoot();
     }
@@ -48,7 +48,7 @@ abstract class ModelValidator
     public function getValidator(): Validator
     {
         if (!isset($this->validator)) {
-            $this->validator = $this->initValidator()->make(
+            $this->validator = $this->validatorFactory()->make(
                 data: $this->getModelData(),
                 rules: $this->getActionRules(),
                 messages: $this->getMessages(),
