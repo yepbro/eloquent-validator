@@ -20,7 +20,7 @@ class GetModelDataTest extends UnitTestCase
     public function test_success(array $data, array $rules, array $expected = []): void
     {
         $model = new MockModel;
-        $model->magicSetOriginal($data);
+        $model->magicSetProperty('original', $data);
 
         $validator = new MockModelValidator($model);
         $validator->setRules($rules);

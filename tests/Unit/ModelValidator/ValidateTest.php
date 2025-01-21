@@ -23,7 +23,7 @@ class ValidateTest extends UnitTestCase
     public function test_exception(array $data, array $rules): void
     {
         $model = new MockModel;
-        $model->magicSetOriginal($data);
+        $model->magicSetProperty('original', $data);
 
         $validator = new MockModelValidator($model);
         $validator->setRules($rules);
@@ -37,7 +37,7 @@ class ValidateTest extends UnitTestCase
     public function test_get_validation_errors_from_exception(array $data, array $rules): void
     {
         $model = new MockModel;
-        $model->magicSetOriginal($data);
+        $model->magicSetProperty('original', $data);
 
         $validator = new MockModelValidator($model);
         $validator->setRules($rules);
@@ -59,7 +59,7 @@ class ValidateTest extends UnitTestCase
     public function test_message_in_exception(array $data, array $rules): void
     {
         $model = new MockModel;
-        $model->magicSetOriginal($data);
+        $model->magicSetProperty('original', $data);
 
         $validator = new MockModelValidator($model);
         $validator->setRules($rules);
