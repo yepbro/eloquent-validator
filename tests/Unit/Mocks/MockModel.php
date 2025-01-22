@@ -10,6 +10,8 @@ class MockModel extends Model
 {
     use MagicalAccessTrait, HasValidator;
 
+    protected $connection = 'array';
+
     public function magicAddOriginal(string $key, mixed $value): void
     {
         $this->original[$key] = $value;

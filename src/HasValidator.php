@@ -8,6 +8,7 @@ use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 
 /**
  * @property string<class-string> $validatorClass
@@ -62,6 +63,7 @@ trait HasValidator
      *
      * @throws ModelValidatorNotFound
      * @throws ModelNotValidated
+     * @see ValidateTest
      */
     public function validate(): void
     {

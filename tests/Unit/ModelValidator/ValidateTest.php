@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\ModelValidator;
 use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModel;
-use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModelValidator;
 use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 
 #[CoversMethod(ModelValidator::class, 'validate')]
@@ -22,11 +21,17 @@ class ValidateTest extends UnitTestCase
     #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'string', 'b' => 'string']])]
     public function test_exception(array $data, array $rules): void
     {
-        $model = new MockModel;
-        $model->magicSetProperty('original', $data);
+        $validator = $this->getMockModelValidator(['original' => $data], ['rules' => $rules]);
 
-        $validator = new MockModelValidator($model);
-        $validator->setRules($rules);
+        $this->expectException(ModelNotValidated::class);
+
+        $validator->validate();
+    }
+
+    #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'string', 'b' => 'string']])]
+    public function test_success_validate(array $data, array $rules): void
+    {
+        $validator = $this->getMockModelValidator(['original' => $data], ['rules' => $rules]);
 
         $this->expectException(ModelNotValidated::class);
 
@@ -36,11 +41,7 @@ class ValidateTest extends UnitTestCase
     #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'string', 'b' => 'string']])]
     public function test_get_validation_errors_from_exception(array $data, array $rules): void
     {
-        $model = new MockModel;
-        $model->magicSetProperty('original', $data);
-
-        $validator = new MockModelValidator($model);
-        $validator->setRules($rules);
+        $validator = $this->getMockModelValidator(['original' => $data], ['rules' => $rules]);
 
         try {
             $validator->validate();
@@ -58,13 +59,9 @@ class ValidateTest extends UnitTestCase
     #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'string', 'b' => 'string']])]
     public function test_message_in_exception(array $data, array $rules): void
     {
-        $model = new MockModel;
-        $model->magicSetProperty('original', $data);
+        $validator = $this->getMockModelValidator(['original' => $data], ['rules' => $rules]);
 
-        $validator = new MockModelValidator($model);
-        $validator->setRules($rules);
-
-        $modelClass = $model::class;
+        $modelClass = MockModel::class;
         $this->expectExceptionMessage("Model $modelClass not validated");
         $validator->validate();
     }
