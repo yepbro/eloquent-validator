@@ -43,8 +43,6 @@
     }
   },
   "scripts": {
-    "up": "docker-compose up",
-    "bash": "docker exec -t -i eloquent-validator-php /bin/bash",
     "test": "vendor/bin/phpunit tests",
     "testdox": "vendor/bin/phpunit tests --no-progress --testdox",
     "coverage-text": "vendor/bin/phpunit tests --coverage-text",
