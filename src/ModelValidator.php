@@ -84,7 +84,9 @@ abstract class ModelValidator
         try {
             $this->getValidator()->validated();
         } catch (ValidationException $exception) {
-            throw new ModelNotValidated($this->model::class, $exception->errors());
+            /** @var array<int, array<int, string>> $errors */
+            $errors = $exception->errors();
+            throw new ModelNotValidated($this->model::class, $errors);
         }
     }
 
@@ -116,7 +118,7 @@ abstract class ModelValidator
      */
     public function getErrorsAsArray(): array
     {
-        return $this->getValidator()->errors()->toArray();
+        return $this->getValidator()->errors()->toArray(); // @phpstan-ignore return.type
     }
 
     /**
