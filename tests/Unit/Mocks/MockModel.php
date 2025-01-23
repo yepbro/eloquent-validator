@@ -12,6 +12,8 @@ class MockModel extends Model
 
     protected $connection = 'array';
 
+    protected $fillable = ['*'];
+
     public function magicAddOriginal(string $key, mixed $value): void
     {
         $this->original[$key] = $value;

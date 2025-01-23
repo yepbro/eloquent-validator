@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace YepBro\EloquentValidator;
 
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsAsJsonTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\SaveWithValidationTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationPassesTest;
@@ -65,13 +67,14 @@ trait HasValidator
     /**
      * Проверить данные, если есть ошибка, то выбросить исключение
      *
-     * @throws ModelValidatorNotFound
-     * @throws ModelNotValidated
+     * @throws ModelValidatorNotFound|ModelNotValidated
      * @see ValidateTest
      */
-    public function validate(): void
+    public function validate(): static
     {
         $this->getModelValidatorInstance()->validate();
+
+        return $this;
     }
 
     /**
@@ -120,19 +123,91 @@ trait HasValidator
     }
 
     /**
-     * Сохранить модель без предварительной валидации (когда режим обязательной валидации включен)
+     * Сохранить модель с предварительной валидации (когда режим обязательной валидации выключен)
+     *
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @see SaveWithValidationTest
      */
-    public function saveWithoutValidation(): bool
+    public function saveWithValidation(array $options = []): bool
     {
-        return parent::save();
+        return $this->validate()->save($options);
     }
 
     /**
-     * Сохранить модель с предварительной валидации (когда режим обязательной валидации выключен)
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @throws Throwable
+     * @see SaveWithValidationTest
      */
-    public function saveWithValidation(): bool
+    public function saveOrFailWithValidation(array $options = []): bool
     {
-        return parent::save();
+        return $this->validate()->saveOrFail($options);
+    }
+
+    /**
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @see SaveWithValidationTest
+     */
+    public function saveQuietlyWithValidation(array $options = []): bool
+    {
+        return $this->validate()->saveQuietly($options);
+    }
+
+    /**
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @see SaveWithValidationTest
+     */
+    public function updateWithValidation(array $attributes = [], array $options = []): bool
+    {
+        if (!$this->exists) {
+            return false;
+        }
+
+        return $this->fill($attributes)->saveWithValidation($options);
+    }
+
+    /**
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @throws Throwable
+     * @see SaveWithValidationTest
+     */
+    public function updateOrFailWithValidation(array $attributes = [], array $options = []): bool
+    {
+        if (!$this->exists) {
+            return false;
+        }
+
+        return $this->fill($attributes)->saveOrFailWithValidation($options);
+    }
+
+    /**
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @see SaveWithValidationTest
+     */
+    public function updateQuietlyWithValidation(array $attributes = [], array $options = []): bool
+    {
+        if (!$this->exists) {
+            return false;
+        }
+
+        return $this->fill($attributes)->saveQuietlyWithValidation($options);
+    }
+
+    /**
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @see SaveWithValidationTest
+     */
+    public function fillWithValidation(array $attributes = []): static
+    {
+        return $this->fill($attributes)->validate();
+    }
+
+    /**
+     * @throws ModelNotValidated|ModelValidatorNotFound
+     * @see SaveWithValidationTest
+     */
+    public function forceFillWithValidation(array $attributes = []): static
+    {
+        return $this->forceFill($attributes)->validate();
     }
 
     /**
