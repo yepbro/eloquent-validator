@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsAsJsonTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
@@ -110,8 +111,8 @@ trait HasValidator
      * Получить ошибки валидации в виде json-строки
      *
      * @param int $options Options for json_encode. Default: JSON_UNESCAPED_UNICODE
-     * @return string
      * @throws ModelValidatorNotFound
+     * @see GetValidationErrorsAsJsonTest
      */
     public function getValidationErrorsAsJson(int $options = JSON_UNESCAPED_UNICODE): string
     {
