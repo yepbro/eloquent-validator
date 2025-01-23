@@ -162,7 +162,7 @@ trait HasValidator
             return false;
         }
 
-        return $this->fill($attributes)->saveWithValidation($options);
+        return $this->fillWithValidation($attributes)->save($options);
     }
 
     /**
@@ -176,10 +176,10 @@ trait HasValidator
             return false;
         }
 
-        return $this->fill($attributes)->saveOrFailWithValidation($options);
+        return $this->fillWithValidation($attributes)->saveOrFail($options);
     }
 
-    /**
+    /**z
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see SaveWithValidationTest
      */
@@ -189,7 +189,7 @@ trait HasValidator
             return false;
         }
 
-        return $this->fill($attributes)->saveQuietlyWithValidation($options);
+        return $this->fillWithValidation($attributes)->saveQuietly($options);
     }
 
     /**

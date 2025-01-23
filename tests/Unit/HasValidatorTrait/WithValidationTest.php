@@ -40,10 +40,23 @@ class WithValidationTest extends UnitTestCase
     #[TestWith(['updateWithValidation'])]
     #[TestWith(['updateOrFailWithValidation'])]
     #[TestWith(['updateQuietlyWithValidation'])]
+    #[TestDox('$method is ok')]
+    public function test_update_exception(string $method): void
+    {
+        $data = ['a' => 1.5, 'b' => 's'];
+        $rules = ['a' => 'int', 'b' => 'string'];
+
+        $model = $this->getMockModel(['original' => [], 'exists' => true], ['rules' => $rules]);
+
+        $this->expectException(ModelNotValidated::class);
+
+        $model->{$method}($data);
+    }
+
     #[TestWith(['fillWithValidation'])]
     #[TestWith(['forceFillWithValidation'])]
     #[TestDox('$method is ok')]
-    public function test_update_and_fill_exception(string $method): void
+    public function test_fill_exception(string $method): void
     {
         $data = ['a' => 1.5, 'b' => 's'];
         $rules = ['a' => 'int', 'b' => 'string'];
