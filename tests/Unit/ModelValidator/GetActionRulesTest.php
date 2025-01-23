@@ -27,7 +27,8 @@ class GetActionRulesTest extends UnitTestCase
 
     public function test_get_update_rules_by_model(): void
     {
-        $this->markTestSkipped();
+        $validator = $this->getMockModelValidator(['exists' => true], ['rules' => $this->rules, 'updateRules' => ['second' => 'required']]);
+        $this->assertSame($this->rules + ['second' => 'required'], $validator->magicCallMethod('getActionRules'));
     }
 
     public function test_get_create_rules_by_enum(): void
@@ -38,7 +39,8 @@ class GetActionRulesTest extends UnitTestCase
 
     public function test_get_create_rules_by_model(): void
     {
-        $this->markTestSkipped();
+        $validator = $this->getMockModelValidator(['exists' => false], ['rules' => $this->rules, 'createRules' => ['second' => 'required']]);
+        $this->assertSame($this->rules + ['second' => 'required'], $validator->magicCallMethod('getActionRules'));
     }
 
     public function test_get_update_rules_and_removed_empty_keys(): void
