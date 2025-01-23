@@ -10,6 +10,7 @@ use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClass
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationPassesTest;
 
 /**
  * @property string<class-string> $validatorClass
@@ -86,6 +87,7 @@ trait HasValidator
      * Проверить, что валидация прошла успешно
      *
      * @throws ModelValidatorNotFound
+     * @see ValidationPassesTest
      */
     public function validationPasses(): bool
     {
