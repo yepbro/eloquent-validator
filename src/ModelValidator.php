@@ -175,7 +175,11 @@ abstract class ModelValidator
         return array_keys($this->getActionRules($action));
     }
 
-    /** @see ClearValidatorTest */
+    /**
+     * Clears the validator and returns the current instance
+     *
+     * @see ClearValidatorTest
+     */
     protected function clearValidator(): ModelValidator
     {
         unset($this->validator);
