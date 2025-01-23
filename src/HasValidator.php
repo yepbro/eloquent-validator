@@ -5,16 +5,17 @@ namespace YepBro\EloquentValidator;
 
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
+use Unit\HasValidatorTrait\GetNamespaceTest;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsAsJsonTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
-use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\SaveWithValidationTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationPassesTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\WithValidationTest;
 
 /**
  * @property string<class-string> $validatorClass
@@ -126,7 +127,7 @@ trait HasValidator
      * Сохранить модель с предварительной валидации (когда режим обязательной валидации выключен)
      *
      * @throws ModelNotValidated|ModelValidatorNotFound
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function saveWithValidation(array $options = []): bool
     {
@@ -136,7 +137,7 @@ trait HasValidator
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @throws Throwable
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function saveOrFailWithValidation(array $options = []): bool
     {
@@ -145,7 +146,7 @@ trait HasValidator
 
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function saveQuietlyWithValidation(array $options = []): bool
     {
@@ -154,7 +155,7 @@ trait HasValidator
 
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function updateWithValidation(array $attributes = [], array $options = []): bool
     {
@@ -168,7 +169,7 @@ trait HasValidator
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @throws Throwable
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function updateOrFailWithValidation(array $attributes = [], array $options = []): bool
     {
@@ -181,7 +182,7 @@ trait HasValidator
 
     /**z
      * @throws ModelNotValidated|ModelValidatorNotFound
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function updateQuietlyWithValidation(array $attributes = [], array $options = []): bool
     {
@@ -194,7 +195,7 @@ trait HasValidator
 
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function fillWithValidation(array $attributes = []): static
     {
@@ -203,7 +204,7 @@ trait HasValidator
 
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
-     * @see SaveWithValidationTest
+     * @see WithValidationTest
      */
     public function forceFillWithValidation(array $attributes = []): static
     {
@@ -213,6 +214,7 @@ trait HasValidator
     /**
      * Получить пространство имен для моделей приложения
      * TODO: from config
+     * @see GetNamespaceTest
      */
     protected function getModelNamespace(): string
     {
@@ -222,6 +224,7 @@ trait HasValidator
     /**
      * Получить пространство имен для валидаторов приложения
      * TODO: from config
+     * @see GetNamespaceTest
      */
     protected function getModelValidatorNamespace(): string
     {
