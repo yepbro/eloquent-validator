@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
@@ -98,6 +99,7 @@ trait HasValidator
      * Получить массив ошибок валидации
      *
      * @throws ModelValidatorNotFound
+     * @see GetValidationErrorsTest
      */
     public function getValidationErrors(): array
     {
