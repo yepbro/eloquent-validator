@@ -21,4 +21,9 @@ class MockModelValidator extends ModelValidator
 
         return new Factory(new Translator($loader, 'en'));
     }
+
+    public function testIsValidatorInit(): bool
+    {
+        return isset($this->validator);
+    }
 }

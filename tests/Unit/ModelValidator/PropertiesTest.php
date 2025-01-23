@@ -11,8 +11,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\TestWith;
 use YepBro\EloquentValidator\ModelValidator;
-use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModel;
-use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModelValidator;
 use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 
 #[CoversMethod(ModelValidator::class, 'getRules')]
@@ -46,8 +44,8 @@ class PropertiesTest extends UnitTestCase
     #[TestDox('$method is ok')]
     public function test_get_property(string $property, array $value, string $method): void
     {
-        $obj = $this->getMockObject($property, $value);
-        $this->assertSame($value, $obj->$method());
+        $validator = $this->getMockModelValidator([], [$property => $value]);
+        $this->assertSame($value, $validator->$method());
     }
 
     #[TestWith(['rules', ['name' => 'required'], 'clearRules'])]
@@ -58,9 +56,9 @@ class PropertiesTest extends UnitTestCase
     #[TestDox('$method is ok')]
     public function test_get_clear_property(string $property, array $value, string $method): void
     {
-        $obj = $this->getMockObject($property, $value);
-        $obj->$method();
-        $this->assertSame([], (fn(): array => $obj->{$property})->call($obj));
+        $validator = $this->getMockModelValidator([], [$property => $value]);
+        $validator->$method();
+        $this->assertSame([], (fn(): array => $validator->{$property})->call($validator));
     }
 
     #[TestWith(['rules', ['name' => 'required'], 'setRules'])]
@@ -71,9 +69,9 @@ class PropertiesTest extends UnitTestCase
     #[TestDox('$method is ok')]
     public function test_get_set_property(string $property, array $value, string $method): void
     {
-        $obj = $this->getMockObject($property);
-        $obj->$method($value);
-        $this->assertSame($value, (fn(): array => $obj->{$property})->call($obj));
+        $validator = $this->getMockModelValidator([], [$property => $value]);
+        $validator->$method($value);
+        $this->assertSame($value, (fn(): array => $validator->{$property})->call($validator));
     }
 
     #[TestWith(['rules', 'addRule'])]
@@ -83,10 +81,10 @@ class PropertiesTest extends UnitTestCase
     public function test_get_add_array_item_to_rules_property(string $property, string $method): void
     {
         $value = ['name' => 'required'];
-        $obj = $this->getMockObject($property, $value);
-        $obj->$method('may_be', ['string']);
+        $validator = $this->getMockModelValidator([], [$property => $value]);
+        $validator->$method('may_be', ['string']);
         $expected = $value + ['may_be' => ['string']];
-        $this->assertSame($expected, (fn(): array => $obj->{$property})->call($obj));
+        $this->assertSame($expected, (fn(): array => $validator->{$property})->call($validator));
     }
 
     #[TestWith(['rules', 'addRule'])]
@@ -96,10 +94,10 @@ class PropertiesTest extends UnitTestCase
     public function test_get_add_string_item_to_rules_property(string $property, string $method): void
     {
         $value = ['name' => 'required'];
-        $obj = $this->getMockObject($property, $value);
-        $obj->$method('may_be', 'string');
+        $validator = $this->getMockModelValidator([], [$property => $value]);
+        $validator->$method('may_be', 'string');
         $expected = $value + ['may_be' => ['string']];
-        $this->assertSame($expected, (fn(): array => $obj->{$property})->call($obj));
+        $this->assertSame($expected, (fn(): array => $validator->{$property})->call($validator));
     }
 
     #[TestWith(['attributes', 'addAttribute'])]
@@ -108,10 +106,10 @@ class PropertiesTest extends UnitTestCase
     public function test_get_add_item_to_property(string $property, string $method): void
     {
         $value = ['name' => 'description'];
-        $obj = $this->getMockObject($property, $value);
-        $obj->$method('may_be', 'string');
+        $validator = $this->getMockModelValidator([], [$property => $value]);
+        $validator->$method('may_be', 'string');
         $expected = $value + ['may_be' => 'string'];
-        $this->assertSame($expected, (fn(): array => $obj->{$property})->call($obj));
+        $this->assertSame($expected, (fn(): array => $validator->{$property})->call($validator));
     }
 
     #[TestWith([['clearRules', 'clearAttributes', 'clearMessages', 'clearCreateRules', 'clearUpdateRules'], []])]
@@ -120,31 +118,10 @@ class PropertiesTest extends UnitTestCase
     public function test_clear_validator_instance(array $methods, array $params = []): void
     {
         foreach ($methods as $method) {
-            $obj = $this->getMockObject(
-                'validator',
-                new Validator(new Translator(new ArrayLoader, 'en'), [], [])
-            );
-            $obj->{$method}(...$params);
-            $this->assertFalse($obj->testIsValidatorInit());
+            $laravelValidator = new Validator(new Translator(new ArrayLoader, 'en'), [], []);
+            $validator = $this->getMockModelValidator([], ['validator' => $laravelValidator]);
+            $validator->{$method}(...$params);
+            $this->assertFalse($validator->testIsValidatorInit());
         }
-    }
-
-    protected function getMockObject(?string $property = null, array|Validator|null $value = null): object
-    {
-        return new class($property, $value) extends MockModelValidator {
-            public function __construct(?string $property = null, array|Validator|null $value = null)
-            {
-                parent::__construct(new MockModel);
-
-                if ($property !== null && $value !== null) {
-                    $this->{$property} = $value;
-                }
-            }
-
-            public function testIsValidatorInit(): bool
-            {
-                return isset($this->validator);
-            }
-        };
     }
 }

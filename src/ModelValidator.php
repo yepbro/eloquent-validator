@@ -158,7 +158,7 @@ abstract class ModelValidator
     {
         return array_combine(
             $this->getUsedRulesKeys(),
-            array_map(fn($key) => $this->model->getRawOriginal($key), $this->getUsedRulesKeys()),
+            array_map(fn($key) => $this->model->getAttributes()[$key] ?? null, $this->getUsedRulesKeys()),
         );
     }
 

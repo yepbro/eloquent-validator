@@ -30,15 +30,23 @@ abstract class UnitTestCase extends TestCase
     private function makeValidator(MockModel $model, array $properties = []): MockModelValidator
     {
         $validator = new MockModelValidator($model);
+
         foreach ($properties as $key => $value) {
             $validator->magicSetProperty($key, $value);
         }
+
         return $validator;
     }
 
     private function makeModel(array $properties = []): MockModel
     {
-        $model = new MockModel;
+        $attributes = $properties['attributes'] ?? $properties['original'] ?? [];
+
+        $model = new MockModel();
+        $properties = [
+                'attributes' => $attributes,
+                'original' => $attributes,
+            ] + $properties;
         foreach ($properties as $key => $value) {
             $model->magicSetProperty($key, $value);
         }
