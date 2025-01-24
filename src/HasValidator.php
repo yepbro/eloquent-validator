@@ -41,7 +41,7 @@ trait HasValidator
                 throw new ModelValidatorNotFound($validatorClass);
             }
 
-            $this->validatorInstance = new $validatorClass($this);
+            $this->validatorInstance = new $validatorClass($this::class, $this->getAttributes(), $this->exists);
         }
 
         return $this->validatorInstance;

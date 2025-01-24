@@ -5,7 +5,6 @@ namespace YepBro\EloquentValidator;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\ValidationException;
@@ -40,7 +39,11 @@ abstract class ModelValidator
 
     protected Validator $validator;
 
-    public function __construct(protected readonly Model $model)
+    public function __construct(
+        protected readonly string $modelClass,
+        protected readonly array  $modelData,
+        protected readonly bool   $exists,
+    )
     {
         //
     }
@@ -86,7 +89,7 @@ abstract class ModelValidator
         } catch (ValidationException $exception) {
             /** @var array<int, array<int, string>> $errors */
             $errors = $exception->errors();
-            throw new ModelNotValidated($this->model::class, $errors);
+            throw new ModelNotValidated($this->modelClass, $errors);
         }
     }
 
@@ -139,7 +142,7 @@ abstract class ModelValidator
      */
     protected function getActionRules(?ActionEnum $action = null): array
     {
-        $rules = ($action && $action === ActionEnum::UPDATE) || ($action === null && $this->model->exists)
+        $rules = ($action && $action === ActionEnum::UPDATE) || ($action === null && $this->exists)
             ? $this->getUpdateRules()
             : $this->getCreateRules();
 
@@ -158,7 +161,7 @@ abstract class ModelValidator
     {
         return array_combine(
             $this->getUsedRulesKeys(),
-            array_map(fn($key) => $this->model->getAttributes()[$key] ?? null, $this->getUsedRulesKeys()),
+            array_map(fn($key) => $this->modelData[$key] ?? null, $this->getUsedRulesKeys()),
         );
     }
 

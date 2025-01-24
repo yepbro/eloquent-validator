@@ -11,4 +11,9 @@ class MockModel extends Model
     use MagicalAccessTrait, HasValidator;
 
     protected $fillable = ['*'];
+
+    public function testIsValidatorInit(): bool
+    {
+        return isset($this->validator);
+    }
 }
