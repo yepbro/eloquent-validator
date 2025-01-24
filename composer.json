@@ -31,7 +31,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^11.0",
-    "phpstan/phpstan": "2.1.x-dev"
+    "phpstan/phpstan": "2.1.x-dev",
+    "orchestra/testbench": "10.x-dev"
   },
   "autoload": {
     "psr-4": {
@@ -40,14 +41,32 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "YepBro\\EloquentValidator\\Tests\\": "tests/"
+      "YepBro\\EloquentValidator\\Tests\\": "tests/",
+      "Workbench\\App\\": "workbench/app/",
+      "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+      "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
     }
   },
   "scripts": {
     "test": "vendor/bin/phpunit tests",
     "testdox": "vendor/bin/phpunit tests --no-progress --testdox",
     "coverage-text": "vendor/bin/phpunit tests --coverage-text",
-    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon -l 10"
+    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon -l 10",
+    "post-autoload-dump": [
+      "@clear",
+      "@prepare"
+    ],
+    "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+    "prepare": "@php vendor/bin/testbench package:discover --ansi",
+    "build": "@php vendor/bin/testbench workbench:build --ansi",
+    "serve": [
+      "Composer\\Config::disableProcessTimeout",
+      "@build",
+      "@php vendor/bin/testbench serve --ansi"
+    ],
+    "lint": [
+      "@php vendor/bin/phpstan analyse --verbose --ansi"
+    ]
   },
   "extra": {
     "laravel": {

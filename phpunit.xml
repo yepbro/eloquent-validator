@@ -13,6 +13,10 @@
         </testsuite>
     </testsuites>
 
+    <testsuite name="Feature">
+        <directory suffix="Test.php">./tests/Feature</directory>
+    </testsuite>
+
     <source>
         <include>
             <directory suffix=".php">./src</directory>
