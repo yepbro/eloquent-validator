@@ -9,7 +9,8 @@
 ### Installation
 
 ```shell
-composer yepbro/eloquent-validator
+composer require yepbro/eloquent-validator
+php artisan vendor:publish --provider="YepBro\EloquentValidator\EloquentValidatorServiceProvider"
 ```
 
 ## Development
