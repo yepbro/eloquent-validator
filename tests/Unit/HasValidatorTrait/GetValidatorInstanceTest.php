@@ -18,15 +18,24 @@ use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 #[Group('HasValidatorTrait')]
 class GetValidatorInstanceTest extends UnitTestCase
 {
+    /**
+     * @throws Exception
+     */
     public function test_validator_not_found(): void
     {
-        $class = new class extends Model {
-            use HasValidator;
-        };
+        $mock = $this->createPartialMock(MockModel::class, ['getModelNamespace', 'getModelValidatorNamespace']);
+
+        $mock
+            ->method('getModelNamespace')
+            ->willReturn("App\Models");
+
+        $mock
+            ->method('getModelValidatorNamespace')
+            ->willReturn("App\Validators");
 
         $this->expectException(ModelValidatorNotFound::class);
 
-        $class->getModelValidatorInstance();
+        $mock->getModelValidatorInstance();
     }
 
     public function test_if_get_validator_class_method_defined(): void
@@ -63,16 +72,21 @@ class GetValidatorInstanceTest extends UnitTestCase
         $mock = $this->createPartialMock(MockModel::class, [
             'getModelNamespace',
             'getModelValidatorNamespace',
+            'getModelClass',
         ]);
 
         $mock
             ->method('getModelNamespace')
-            ->willReturn("YepBro\\EloquentValidator\\Tests\\Mocks\\");
+            ->willReturn("YepBro\EloquentValidator\Tests\Mocks");
 
         $mock
             ->method('getModelValidatorNamespace')
-            ->willReturn("YepBro\\EloquentValidator\\Tests\\Mocks\\");
+            ->willReturn("YepBro\EloquentValidator\Tests\Mocks");
 
-        $this->assertInstanceOf(ModelValidator::class, new MockModel()->getModelValidatorInstance());
+        $mock
+            ->method('getModelClass')
+            ->willReturn(MockModel::class);
+
+        $this->assertInstanceOf(ModelValidator::class, $mock->getModelValidatorInstance());
     }
 }

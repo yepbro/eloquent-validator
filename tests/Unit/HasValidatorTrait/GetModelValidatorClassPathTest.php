@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\MockObject\Exception;
 use YepBro\EloquentValidator\HasValidator;
-use YepBro\EloquentValidator\Tests\Unit\Mocks\MagicalAccessTrait;
 use YepBro\EloquentValidator\Tests\Unit\Mocks\MockModel;
 use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 
@@ -17,28 +16,39 @@ use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 #[Group('HasValidatorTrait')]
 class GetModelValidatorClassPathTest extends UnitTestCase
 {
+    /**
+     * @throws Exception
+     */
     #[TestWith(['App\Models\User', 'App\Validators\UserValidator'])]
     #[TestWith(['App\Models\Users\Manager', 'App\Validators\Users\ManagerValidator'])]
     #[TestWith(['App\Models\Users\Admins\RootUser', 'App\Validators\Users\Admins\RootUserValidator'])]
     #[TestDox('$modelClass => $validatorClass')]
     public function test_models_and_validators_in_default_folder(string $modelClass, string $validatorClass): void
     {
-        $model = $this->getMockModel();
+        $mock = $this->createPartialMock(MockModel::class, ['getModelNamespace', 'getModelValidatorNamespace']);
 
-        $this->assertSame($validatorClass, $model->magicCallMethod('getModelValidatorClass', $modelClass));
+        $mock
+            ->method('getModelNamespace')
+            ->willReturn("App\Models");
+
+        $mock
+            ->method('getModelValidatorNamespace')
+            ->willReturn("App\Validators");
+
+        $this->assertSame($validatorClass, $mock->magicCallMethod('getModelValidatorClass', $modelClass));
     }
 
+    /**
+     * @throws Exception
+     */
     #[TestWith(['App\Models\Admin', 'App\ModelValidators\UserValidator'])]
     #[TestDox('$modelClass => $validatorClass')]
     public function test_defined_validator_class_property(string $modelClass, string $validatorClass): void
     {
-        $model = new class extends MockModel {
-            use MagicalAccessTrait, HasValidator;
+        $mock = $this->createPartialMock(MockModel::class, ['getModelNamespace', 'getModelValidatorNamespace']);
+        $mock->magicSetProperty('validatorClass', 'App\ModelValidators\UserValidator');
 
-            protected $validatorClass = 'App\ModelValidators\UserValidator';
-        };
-
-        $this->assertSame($validatorClass, $model->magicCallMethod('getModelValidatorClass', $modelClass));
+        $this->assertSame($validatorClass, $mock->magicCallMethod('getModelValidatorClass', $modelClass));
     }
 
     /**
@@ -50,7 +60,11 @@ class GetModelValidatorClassPathTest extends UnitTestCase
     #[TestDox('$modelClass => $validatorClass')]
     public function test_models_in_default_folder_and_validators_nested(string $modelClass, string $validatorClass): void
     {
-        $mock = $this->createPartialMock(MockModel::class, ['getModelValidatorNamespace']);
+        $mock = $this->createPartialMock(MockModel::class, ['getModelNamespace', 'getModelValidatorNamespace']);
+
+        $mock
+            ->method('getModelNamespace')
+            ->willReturn("App\Models");
 
         $mock
             ->method('getModelValidatorNamespace')

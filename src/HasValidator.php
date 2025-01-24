@@ -36,7 +36,7 @@ trait HasValidator
     public function getModelValidatorInstance(): ModelValidator
     {
         if (!isset($this->validatorInstance)) {
-            $validatorClass = $this->getModelValidatorClass(get_class($this));
+            $validatorClass = $this->getModelValidatorClass($this->getModelClass());
 
             if (!class_exists($validatorClass)) {
                 throw new ModelValidatorNotFound($validatorClass);
@@ -46,6 +46,14 @@ trait HasValidator
         }
 
         return $this->validatorInstance;
+    }
+
+    /**
+     * Получить имя класса модели
+     */
+    protected function getModelClass(): string
+    {
+        return get_class($this);
     }
 
     /**
