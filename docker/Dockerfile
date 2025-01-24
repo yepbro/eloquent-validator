@@ -1,4 +1,4 @@
-FROM ghcr.io/devgine/composer-php:v2-php8.4-alpine
+FROM ghcr.io/devgine/composer-php:v2-php8.3-alpine
 
 LABEL maintainer="Denis YepBro"
 

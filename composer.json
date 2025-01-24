@@ -20,7 +20,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^8.4",
+    "php": "^8.3",
     "illuminate/database": "*",
     "illuminate/events": "*",
     "illuminate/support": "*",
@@ -49,6 +49,8 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit tests",
+    "unittest": "vendor/bin/phpunit tests --testsuite=Unit",
+    "laratest": "vendor/bin/phpunit tests --testsuite=Feature",
     "testdox": "vendor/bin/phpunit tests --no-progress --testdox",
     "coverage-text": "vendor/bin/phpunit tests --coverage-text",
     "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon -l 10",
