@@ -3,7 +3,7 @@
 namespace Workbench\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Workbench\Database\Factories\UserFactory;
+use Workbench\App\Models\Product;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -14,11 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // UserFactory::new()->times(10)->create();
-
-        UserFactory::new()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Product::factory()->count(10)->create();
     }
 }

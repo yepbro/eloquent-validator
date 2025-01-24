@@ -48,6 +48,9 @@
     }
   },
   "scripts": {
+    "fresh": "vendor/bin/testbench migrate:fresh",
+    "seeder": "vendor/bin/testbench migrate:fresh --seeder='\\Workbench\\Database\\Seeders\\DatabaseSeeder'",
+    "artisan": "vendor/bin/testbench",
     "test": "vendor/bin/phpunit tests",
     "unittest": "vendor/bin/phpunit tests --testsuite=Unit",
     "laratest": "vendor/bin/phpunit tests --testsuite=Feature",
