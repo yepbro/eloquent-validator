@@ -24,9 +24,9 @@ docker-compose build --no-cache
 
 docker-compose up
 docker exec -t -i eloquent-validator-php /bin/bash
-
-composer run up
-composer run bash
+// or
+make up
+make bash
 ```
 
 ### PhpStan
