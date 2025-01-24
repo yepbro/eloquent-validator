@@ -6,6 +6,7 @@ namespace YepBro\EloquentValidator;
 use Composer\InstalledVersions;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
+use YepBro\EloquentValidator\Console\Commands\MakeValidatorCommand;
 
 class EloquentValidatorServiceProvider extends ServiceProvider
 {
@@ -23,5 +24,11 @@ class EloquentValidatorServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/' . Constants::KEY . '.php' => config_path(Constants::KEY . '.php')
         ]);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MakeValidatorCommand::class,
+            ]);
+        }
     }
 }

@@ -1,0 +1,19 @@
+<?php
+
+namespace {{ namespace }};
+
+use YepBro\EloquentValidator\ModelValidator;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
+
+class {{ class }} extends ModelValidator
+{
+    /** @var array<string, string|array<int, string|Rule|ValidationRule>> */
+    protected array $rules = [];
+
+    /** @var array<string, string> */
+    protected array $messages = [];
+
+    /** @var array<string, string> */
+    protected array $attributes = [];
+}

@@ -219,7 +219,7 @@ trait HasValidator
      */
     protected function getModelNamespace(): string
     {
-        return config(Constants::KEY . '.models_namespace', "App\\Models\\");
+        return config(Constants::KEY . '.models_namespace', 'App\Models');
     }
 
     /**
@@ -229,6 +229,6 @@ trait HasValidator
      */
     protected function getModelValidatorNamespace(): string
     {
-        return config(Constants::KEY . '.validators_namespace', "App\\ModelValidators\\");
+        return config(Constants::KEY . '.validators_namespace', 'App\Validators');
     }
 }
