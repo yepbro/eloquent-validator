@@ -5,10 +5,10 @@ namespace YepBro\EloquentValidator;
 
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
-use Unit\HasValidatorTrait\GetNamespaceTest;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
+use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetNamespaceTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsAsJsonTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidatorInstanceTest;
@@ -17,6 +17,8 @@ use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationPassesTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\WithValidationTest;
 use function config;
+
+// @phpstan-ignore function.notFound
 
 /**
  * @property string<class-string> $validatorClass

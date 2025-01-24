@@ -15,13 +15,13 @@ class GetNamespaceTest extends UnitTestCase
     {
         $model = $this->getMockModel();
 
-        $this->assertSame('App\\Models\\', $model->magicCallMethod('getModelNamespace'));
+        $this->assertSame('App\Models', $model->magicCallMethod('getModelNamespace'));
     }
 
     public function test_get_validator_namespace(): void
     {
         $model = $this->getMockModel();
 
-        $this->assertSame('App\\ModelValidators\\', $model->magicCallMethod('getModelValidatorNamespace'));
+        $this->assertSame('App\Validators', $model->magicCallMethod('getModelValidatorNamespace'));
     }
 }
