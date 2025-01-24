@@ -36,7 +36,7 @@ class MakeValidatorCommand extends GeneratorCommand
     protected function getOptions(): array
     {
         return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the mailable already exists'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the validator already exists'],
         ];
     }
 }
