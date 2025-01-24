@@ -7,9 +7,7 @@ use Composer\InstalledVersions;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
 use YepBro\EloquentValidator\Console\Commands\MakeValidatorCommand;
-use function config_path;
-
-// @phpstan-ignore function.notFound
+use function config_path; // @phpstan-ignore function.notFound
 
 class EloquentValidatorServiceProvider extends ServiceProvider
 {
