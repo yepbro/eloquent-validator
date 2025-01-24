@@ -16,7 +16,7 @@ use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationPassesTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\WithValidationTest;
-use function config; // @phpstan-ignore function.notFound
+use function config;
 
 /**
  * @property string<class-string> $validatorClass

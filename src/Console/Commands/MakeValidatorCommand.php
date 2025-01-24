@@ -5,7 +5,7 @@ namespace YepBro\EloquentValidator\Console\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use YepBro\EloquentValidator\Constants;
-use function config; // @phpstan-ignore function.notFound
+use function config;
 
 class MakeValidatorCommand extends GeneratorCommand
 {
@@ -24,7 +24,6 @@ class MakeValidatorCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        /** @phpstan-ignore function.notFound */
         return config(Constants::KEY . '.validators_namespace', "$rootNamespace\Validators"); // @phpstan-ignore return.type
     }
 
