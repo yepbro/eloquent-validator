@@ -16,6 +16,7 @@ use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidateTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationFailsTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\ValidationPassesTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\WithValidationTest;
+use function config;
 
 /**
  * @property string<class-string> $validatorClass
@@ -212,22 +213,22 @@ trait HasValidator
     }
 
     /**
-     * Получить пространство имен для моделей приложения
-     * TODO: from config
+     * Получить пространство имен для моделей
+     *
      * @see GetNamespaceTest
      */
     protected function getModelNamespace(): string
     {
-        return "App\\Models\\";
+        return config(Constants::KEY . '.models_namespace', "App\\Models\\");
     }
 
     /**
-     * Получить пространство имен для валидаторов приложения
-     * TODO: from config
+     * Получить пространство имен для валидаторов моделей
+     *
      * @see GetNamespaceTest
      */
     protected function getModelValidatorNamespace(): string
     {
-        return "App\\ModelValidators\\";
+        return config(Constants::KEY . '.validators_namespace', "App\\ModelValidators\\");
     }
 }

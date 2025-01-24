@@ -5,6 +5,7 @@
          colors="true"
          processIsolation="true"
          stopOnFailure="false"
+         displayDetailsOnTestsThatTriggerWarnings="true"
 >
     <testsuites>
         <testsuite name="Unit">
