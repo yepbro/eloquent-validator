@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\HasValidatorTrait;
+namespace YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
