@@ -39,6 +39,9 @@ abstract class ModelValidator
 
     protected Validator $validator;
 
+    /**
+     * @param array<string, mixed> $modelData
+     */
     public function __construct(
         protected readonly string $modelClass,
         protected readonly array  $modelData,
