@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Workbench\App\Validators\ProductValidator;
-use Workbench\Database\Factories\ProductFactory;
+use Workbench\Database\Factories\MainProductFactory;
 use YepBro\EloquentValidator\HasValidator;
+use YepBro\EloquentValidator\Validatable;
 
-#[UseFactory(ProductFactory::class)]
-class Product extends Model
+#[UseFactory(MainProductFactory::class)]
+class MainProduct extends Model implements Validatable
 {
     use HasFactory, HasValidator;
 

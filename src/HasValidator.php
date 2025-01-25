@@ -8,6 +8,7 @@ use Throwable;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Feature\ActionTest;
+use YepBro\EloquentValidator\Tests\Feature\AutoValidationTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetNamespaceTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsAsJsonTest;
@@ -27,6 +28,19 @@ use function config;
 trait HasValidator
 {
     private ModelValidator $validatorInstance;
+
+    /**
+     * @see AutoValidationTest
+     */
+    protected static function bootHasValidator(): void
+    {
+        static::saving(function (Model $model) {
+            /** @var Model|HasValidator $model */
+            if ($model->hasValidatableInterface()) {
+                $model->validate();
+            }
+        });
+    }
 
     /**
      * Получить инстанс валидатора модели
@@ -59,6 +73,9 @@ trait HasValidator
         return get_class($this);
     }
 
+    /**
+     * @see Tests\Unit\HasValidatorTrait\AutoValidationTest
+     */
     protected function hasValidatableInterface(): bool
     {
         return is_a($this, Validatable::class);
