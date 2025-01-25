@@ -10,8 +10,16 @@ class ModelNotValidated extends EloquentValidatorException
      */
     public function __construct(string $modelName, public readonly array $errors)
     {
-        $this->message = "Model $modelName not validated";
+        $message = "Model $modelName not validated";
 
-        parent::__construct($this->message, $this->code, $this->getPrevious());
+        parent::__construct($message, $this->code, $this->getPrevious());
+    }
+
+    /**
+     * @return array<int, array<int, string>>
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }

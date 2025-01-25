@@ -7,8 +7,8 @@ class ModelValidatorNotFound extends EloquentValidatorException
 {
     public function __construct(string $class)
     {
-        parent::__construct($this->message, $this->code, $this->getPrevious());
+        $message = "Class $class does not exist";
 
-        $this->message = "Class $class does not exist";
+        parent::__construct($message, $this->code, $this->getPrevious());
     }
 }

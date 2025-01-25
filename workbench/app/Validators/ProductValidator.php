@@ -24,10 +24,8 @@ class ProductValidator extends ModelValidator
 
     /** @var array<string, string> */
     protected array $messages = [
-        'name.required' => ':attribute is required',
-        'name.string' => ':attribute must be a string',
-        'price.required' => 'Price is required',
-        'total.required' => 'Total is required',
+        'name.required' => ':attribute is mandatory.',
+        'name.string' => ':attribute must be a string.',
     ];
 
     /** @var array<string, string> */
