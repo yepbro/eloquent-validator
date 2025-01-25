@@ -16,16 +16,9 @@ class ProductValidator extends ModelValidator
         'is_top' => 'boolean',
     ];
 
-    /** @var array<string, string|array<int, string|Rule|ValidationRule>> */
-    protected array $updateRules = [];
-
-    /** @var array<string, string|array<int, string|Rule|ValidationRule>> */
-    protected array $createRules = [];
-
     /** @var array<string, string> */
     protected array $messages = [
         'name.required' => ':attribute is mandatory.',
-        'name.string' => ':attribute must be a string.',
     ];
 
     /** @var array<string, string> */

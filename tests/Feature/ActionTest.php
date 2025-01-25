@@ -1,6 +1,6 @@
 <?php
 
-namespace YepBro\EloquentValidator\Tests\Feature\Manual;
+namespace YepBro\EloquentValidator\Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Str;
@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\HasValidator;
-use YepBro\EloquentValidator\Tests\Feature\TestCase;
 
 #[CoversMethod(HasValidator::class, 'fillWithValidation')]
 #[CoversMethod(HasValidator::class, 'forceFillWithValidation')]
@@ -20,9 +19,11 @@ use YepBro\EloquentValidator\Tests\Feature\TestCase;
 #[CoversMethod(HasValidator::class, 'saveWithValidation')]
 #[CoversMethod(HasValidator::class, 'saveOrFailWithValidation')]
 #[CoversMethod(HasValidator::class, 'saveQuietlyWithValidation')]
-class ActionTest extends TestCase
+class ActionTest extends FeatureTestCase
 {
     use DatabaseMigrations;
+
+    protected bool $fakeProduct = true;
 
     #[TestWith(['saveWithValidation'])]
     #[TestWith(['saveOrFailWithValidation'])]
@@ -31,10 +32,9 @@ class ActionTest extends TestCase
     public function test_save_ok(string $method): void
     {
         $data = ['name' => Str::random()];
-        $model = $this->getProduct();
-        $model->fill($data)->{$method}();
-        $this->assertSame($model->name, $data['name']);
-        $this->assertDatabaseHas($model, $data);
+        $this->product->fill($data)->{$method}();
+        $this->assertSame($this->product->name, $data['name']);
+        $this->assertDatabaseHas($this->product, $data);
     }
 
     /**
@@ -47,9 +47,8 @@ class ActionTest extends TestCase
     public function test_fill_ok(string $method): void
     {
         $data = ['name' => Str::random()];
-        $model = $this->getProduct();
-        $model->{$method}($data);
-        $this->assertSame($model->name, $data['name']);
+        $this->product->{$method}($data);
+        $this->assertSame($this->product->name, $data['name']);
     }
 
     #[TestWith(['updateWithValidation'])]
@@ -59,10 +58,9 @@ class ActionTest extends TestCase
     public function test_update_ok(string $method): void
     {
         $data = ['name' => Str::random()];
-        $model = $this->getProduct();
-        $model->{$method}($data);
-        $this->assertSame($model->name, $data['name']);
-        $this->assertDatabaseHas($model, $data);
+        $this->product->{$method}($data);
+        $this->assertSame($this->product->name, $data['name']);
+        $this->assertDatabaseHas($this->product, $data);
     }
 
     /**
@@ -80,10 +78,9 @@ class ActionTest extends TestCase
     #[TestDox('Method $method threw exception')]
     public function test_exception(string $method, string $type): void
     {
-        $model = $this->getProduct();
         $data = ['name' => null];
         $this->expectException(ModelNotValidated::class);
-        $type === 'fill' ? $model->{$method}($data) : $model->fill($data)->{$method}();
+        $type === 'fill' ? $this->product->{$method}($data) : $this->product->fill($data)->{$method}();
     }
 
     #[TestWith(['fillWithValidation', 'fill'])]
@@ -100,9 +97,9 @@ class ActionTest extends TestCase
         $model = $this->getProduct();
         $data = ['name' => null, 'price' => 'a'];
         try {
-            $type === 'fill' ? $model->{$method}($data) : $model->fill($data)->{$method}();
+            $type === 'fill' ? $this->product->{$method}($data) : $this->product->fill($data)->{$method}();
         } catch (ModelNotValidated $e) {
-            $modelName = get_class($model);
+            $modelName = get_class($this->product);
             $this->assertSame($e->getMessage(), "Model $modelName not validated");
             $this->assertEqualsCanonicalizing([
                 'price' => ['The price field must be a number.'],

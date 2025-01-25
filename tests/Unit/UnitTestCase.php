@@ -29,7 +29,7 @@ abstract class UnitTestCase extends TestCase
 
     private function makeValidator(MockModel $model, array $properties = []): MockModelValidator
     {
-        $validator = new MockModelValidator($model::class, $model->getAttributes(), $model->exists);
+        $validator = new MockModelValidator($model::class, $model->exists, $model->getAttributes());
 
         foreach ($properties as $key => $value) {
             $validator->magicSetProperty($key, $value);

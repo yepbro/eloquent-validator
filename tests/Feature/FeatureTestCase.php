@@ -8,9 +8,21 @@ use Orchestra\Testbench\Concerns\WithWorkbench;
 use Workbench\App\Models\Product;
 use YepBro\EloquentValidator\EloquentValidatorServiceProvider;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class FeatureTestCase extends \Orchestra\Testbench\TestCase
 {
     use WithWorkbench;
+
+    protected Product $product;
+
+    protected bool $fakeProduct = false;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        if ($this->fakeProduct) {
+            $this->product = $this->getProduct();
+        }
+    }
 
     protected function getProduct(array $attributes = []): Product
     {

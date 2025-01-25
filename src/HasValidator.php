@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Throwable;
 use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
+use YepBro\EloquentValidator\Tests\Feature\ActionTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetModelValidatorClassPathTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetNamespaceTest;
 use YepBro\EloquentValidator\Tests\Unit\HasValidatorTrait\GetValidationErrorsAsJsonTest;
@@ -42,7 +43,9 @@ trait HasValidator
                 throw new ModelValidatorNotFound($validatorClass);
             }
 
-            $this->validatorInstance = new $validatorClass($this::class, $this->getAttributes(), $this->exists);
+            $this->validatorInstance = new $validatorClass($this::class, $this->exists, $this->getAttributes());
+        } else {
+            $this->validatorInstance->setData($this->getAttributes());
         }
 
         return $this->validatorInstance;
@@ -137,6 +140,7 @@ trait HasValidator
      *
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function saveWithValidation(array $options = []): bool
     {
@@ -147,6 +151,7 @@ trait HasValidator
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @throws Throwable
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function saveOrFailWithValidation(array $options = []): bool
     {
@@ -156,6 +161,7 @@ trait HasValidator
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function saveQuietlyWithValidation(array $options = []): bool
     {
@@ -165,6 +171,7 @@ trait HasValidator
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function updateWithValidation(array $attributes = [], array $options = []): bool
     {
@@ -179,6 +186,7 @@ trait HasValidator
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @throws Throwable
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function updateOrFailWithValidation(array $attributes = [], array $options = []): bool
     {
@@ -192,6 +200,7 @@ trait HasValidator
     /**z
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function updateQuietlyWithValidation(array $attributes = [], array $options = []): bool
     {
@@ -205,6 +214,7 @@ trait HasValidator
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function fillWithValidation(array $attributes = []): static
     {
@@ -214,6 +224,7 @@ trait HasValidator
     /**
      * @throws ModelNotValidated|ModelValidatorNotFound
      * @see WithValidationTest
+     * @see ActionTest
      */
     public function forceFillWithValidation(array $attributes = []): static
     {

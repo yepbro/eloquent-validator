@@ -44,8 +44,8 @@ abstract class ModelValidator
      */
     public function __construct(
         protected readonly string $modelClass,
-        protected readonly array  $modelData,
         protected readonly bool   $exists,
+        protected array $modelData,
     )
     {
         //
@@ -386,6 +386,44 @@ abstract class ModelValidator
     public function clearAttributes(): ModelValidator
     {
         $this->attributes = [];
+        $this->clearValidator();
+        return $this;
+    }
+
+    /**
+     * @return array<string, mixed>
+     * @see PropertiesTest
+     */
+    public function getData(): array
+    {
+        return $this->modelData;
+    }
+
+    /**
+     * @param array<string, string> $modelData
+     * @see PropertiesTest
+     */
+    public function setData(array $modelData): ModelValidator
+    {
+        $this->modelData = $modelData;
+        $this->clearValidator();
+        return $this;
+    }
+
+    /**
+     * @see PropertiesTest
+     */
+    public function addData(string $key, string $value): ModelValidator
+    {
+        $this->modelData = array_merge($this->modelData, [$key => $value]);
+        $this->clearValidator();
+        return $this;
+    }
+
+    /** @see PropertiesTest */
+    public function clearData(): ModelValidator
+    {
+        $this->modelData = [];
         $this->clearValidator();
         return $this;
     }

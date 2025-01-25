@@ -18,21 +18,25 @@ use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 #[CoversMethod(ModelValidator::class, 'getMessages')]
 #[CoversMethod(ModelValidator::class, 'getCreateRules')]
 #[CoversMethod(ModelValidator::class, 'getUpdateRules')]
+#[CoversMethod(ModelValidator::class, 'getData')]
 #[CoversMethod(ModelValidator::class, 'clearRules')]
 #[CoversMethod(ModelValidator::class, 'clearAttributes')]
 #[CoversMethod(ModelValidator::class, 'clearMessages')]
 #[CoversMethod(ModelValidator::class, 'clearCreateRules')]
 #[CoversMethod(ModelValidator::class, 'clearUpdateRules')]
+#[CoversMethod(ModelValidator::class, 'clearData')]
 #[CoversMethod(ModelValidator::class, 'setRules')]
 #[CoversMethod(ModelValidator::class, 'setAttributes')]
 #[CoversMethod(ModelValidator::class, 'setMessages')]
 #[CoversMethod(ModelValidator::class, 'setCreateRules')]
 #[CoversMethod(ModelValidator::class, 'setUpdateRules')]
+#[CoversMethod(ModelValidator::class, 'setData')]
 #[CoversMethod(ModelValidator::class, 'addRule')]
 #[CoversMethod(ModelValidator::class, 'addAttribute')]
 #[CoversMethod(ModelValidator::class, 'addMessage')]
 #[CoversMethod(ModelValidator::class, 'addCreateRule')]
 #[CoversMethod(ModelValidator::class, 'addUpdateRule')]
+#[CoversMethod(ModelValidator::class, 'addData')]
 #[Group('ModelValidator')]
 class PropertiesTest extends UnitTestCase
 {
@@ -41,6 +45,7 @@ class PropertiesTest extends UnitTestCase
     #[TestWith(['messages', ['name' => 'required'], 'getMessages'])]
     #[TestWith(['createRules', ['name' => 'required'], 'getCreateRules'])]
     #[TestWith(['updateRules', ['name' => 'required'], 'getUpdateRules'])]
+    #[TestWith(['modelData', ['name' => 'required'], 'getData'])]
     #[TestDox('$method is ok')]
     public function test_get_property(string $property, array $value, string $method): void
     {
@@ -53,6 +58,7 @@ class PropertiesTest extends UnitTestCase
     #[TestWith(['messages', ['name' => 'required'], 'clearMessages'])]
     #[TestWith(['createRules', ['name' => 'required'], 'clearCreateRules'])]
     #[TestWith(['updateRules', ['name' => 'required'], 'clearUpdateRules'])]
+    #[TestWith(['modelData', ['name' => 'required'], 'clearData'])]
     #[TestDox('$method is ok')]
     public function test_get_clear_property(string $property, array $value, string $method): void
     {
@@ -66,6 +72,7 @@ class PropertiesTest extends UnitTestCase
     #[TestWith(['messages', ['name' => 'required'], 'setMessages'])]
     #[TestWith(['createRules', ['name' => 'required'], 'setCreateRules'])]
     #[TestWith(['updateRules', ['name' => 'required'], 'setUpdateRules'])]
+    #[TestWith(['modelData', ['name' => 'required'], 'setData'])]
     #[TestDox('$method is ok')]
     public function test_get_set_property(string $property, array $value, string $method): void
     {
@@ -102,6 +109,7 @@ class PropertiesTest extends UnitTestCase
 
     #[TestWith(['attributes', 'addAttribute'])]
     #[TestWith(['messages', 'addMessage'])]
+    #[TestWith(['modelData', 'addData'])]
     #[TestDox('$method is ok')]
     public function test_get_add_item_to_property(string $property, string $method): void
     {
@@ -112,9 +120,9 @@ class PropertiesTest extends UnitTestCase
         $this->assertSame($expected, (fn(): array => $validator->{$property})->call($validator));
     }
 
-    #[TestWith([['clearRules', 'clearAttributes', 'clearMessages', 'clearCreateRules', 'clearUpdateRules'], []])]
-    #[TestWith([['setRules', 'setAttributes', 'setMessages', 'setCreateRules', 'setUpdateRules'], [[]]])]
-    #[TestWith([['addRule', 'addAttribute', 'addMessage', 'addCreateRule', 'addUpdateRule'], ['p', 'v']])]
+    #[TestWith([['clearRules', 'clearAttributes', 'clearMessages', 'clearCreateRules', 'clearUpdateRules', 'clearData'], []])]
+    #[TestWith([['setRules', 'setAttributes', 'setMessages', 'setCreateRules', 'setUpdateRules', 'setData'], [[]]])]
+    #[TestWith([['addRule', 'addAttribute', 'addMessage', 'addCreateRule', 'addUpdateRule', 'addData'], ['p', 'v']])]
     public function test_clear_validator_instance(array $methods, array $params = []): void
     {
         foreach ($methods as $method) {
