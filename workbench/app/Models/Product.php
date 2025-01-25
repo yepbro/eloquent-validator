@@ -18,17 +18,10 @@ class Product extends Model
 
     public $validatorClass = ProductValidator::class;
 
-    protected $fillable = [
-        'name',
-        'price',
-        'total',
-        'advantages',
-        'is_top',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'is_top' => 'boolean',
         'price' => 'decimal:2',
-        'advantages' => 'array',
     ];
 }

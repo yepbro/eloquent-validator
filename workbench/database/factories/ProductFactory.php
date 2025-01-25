@@ -18,7 +18,6 @@ class ProductFactory extends Factory
             'name' => fake()->name(),
             'price' => fake()->randomFloat(2, 1, 999),
             'total' => fake()->numberBetween(0, 500),
-            'advantages' => fake()->words(),
             'is_top' => fake()->boolean(),
         ];
     }

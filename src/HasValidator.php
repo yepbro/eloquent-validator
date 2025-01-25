@@ -184,6 +184,80 @@ trait HasValidator
     }
 
     /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function makeWithValidation(array $attributes = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData($attributes)->validate();
+
+        return $model->make($attributes);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function firstOrNewWithValidation(array $attributes = [], array $values = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData(array_merge($attributes, $values))->validate();
+
+        return $model->firstOrNew($attributes, $values);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function firstOrCreateWithValidation(array $attributes = [], array $values = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData(array_merge($attributes, $values))->validate();
+
+        return $model->firstOrCreate($attributes, $values);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function createOrFirstWithValidation(array $attributes = [], array $values = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData(array_merge($attributes, $values))->validate();
+
+        return $model->createOrFirst($attributes, $values);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function updateOrCreateWithValidation(array $attributes = [], array $values = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData(array_merge($attributes, $values))->validate();
+
+        return $model->updateOrCreate($attributes, $values);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function incrementOrCreateWithValidation(
+        array $attributes = [], string $column = 'count', $default = 1, $step = 1, array $extra = []
+    ): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData($attributes)->validate();
+
+        return $model->incrementOrCreate($attributes, $column, $default, $step, $extra);
+    }
+
+    /**
      * Сохранить модель с предварительной валидации (когда режим обязательной валидации выключен)
      *
      * @throws ModelNotValidated|ModelValidatorNotFound
