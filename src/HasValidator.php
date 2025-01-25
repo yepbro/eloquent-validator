@@ -59,6 +59,11 @@ trait HasValidator
         return get_class($this);
     }
 
+    protected function hasValidatableInterface(): bool
+    {
+        return is_a($this, Validatable::class);
+    }
+
     /**
      * Получить имя класса валидатора по имени модели (с учетом вложенности) или на основе предустановленного значения
      *
