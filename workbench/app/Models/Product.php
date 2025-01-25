@@ -14,6 +14,8 @@ class Product extends Model
 {
     use HasFactory, HasValidator;
 
+    protected $table = 'products';
+
     public $validatorClass = ProductValidator::class;
 
     protected $fillable = [
