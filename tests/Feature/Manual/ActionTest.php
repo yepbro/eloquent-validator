@@ -14,6 +14,12 @@ use YepBro\EloquentValidator\Tests\Feature\TestCase;
 
 #[CoversMethod(HasValidator::class, 'fillWithValidation')]
 #[CoversMethod(HasValidator::class, 'forceFillWithValidation')]
+#[CoversMethod(HasValidator::class, 'updateWithValidation')]
+#[CoversMethod(HasValidator::class, 'updateOrFailWithValidation')]
+#[CoversMethod(HasValidator::class, 'updateQuietlyWithValidation')]
+#[CoversMethod(HasValidator::class, 'saveWithValidation')]
+#[CoversMethod(HasValidator::class, 'saveOrFailWithValidation')]
+#[CoversMethod(HasValidator::class, 'saveQuietlyWithValidation')]
 class ActionTest extends TestCase
 {
     use DatabaseMigrations;
