@@ -136,6 +136,54 @@ trait HasValidator
     }
 
     /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function createWithValidation(array $attributes = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData($attributes)->validate();
+
+        return $model->create($attributes);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function createQuietlyWithValidation(array $attributes = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData($attributes)->validate();
+
+        return $model->createQuietly($attributes);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function forceCreateWithValidation(array $attributes = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData($attributes)->validate();
+
+        return $model->forceCreate($attributes);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function forceCreateQuietlyWithValidation(array $attributes = []): static
+    {
+        $model = new static;
+        $model->getModelValidatorInstance()->setData($attributes)->validate();
+
+        return $model->forceCreateQuietly($attributes);
+    }
+
+    /**
      * Сохранить модель с предварительной валидации (когда режим обязательной валидации выключен)
      *
      * @throws ModelNotValidated|ModelValidatorNotFound
