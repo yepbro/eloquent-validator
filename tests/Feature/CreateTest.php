@@ -25,8 +25,6 @@ class CreateTest extends FeatureTestCase
 {
     use DatabaseMigrations;
 
-    protected bool $fakeProduct = false;
-
     /**
      * @throws ModelValidatorNotFound
      * @throws ModelNotValidated

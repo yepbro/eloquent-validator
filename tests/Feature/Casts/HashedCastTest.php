@@ -9,5 +9,8 @@ class HashedCastTest extends FeatureTestCase
 {
     use DatabaseMigrations;
 
-    protected bool $fakeProduct = false;
+    public function test_ok()
+    {
+        $this->markTestSkipped();
+    }
 }
