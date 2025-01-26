@@ -78,7 +78,7 @@ trait HasValidator
      */
     protected function hasValidatableInterface(): bool
     {
-        return is_a($this, Validatable::class);
+        return $this instanceof Validatable;
     }
 
     /**

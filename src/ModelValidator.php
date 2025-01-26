@@ -64,6 +64,7 @@ abstract class ModelValidator
      * Получить инстанс Laravel-валидатора с заполненными данными
      *
      * @see GetValidatorTest
+     * TODO: may be protected
      */
     public function getValidator(): Validator
     {
