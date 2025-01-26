@@ -19,6 +19,6 @@ class GetValidatorTest extends UnitTestCase
     {
         $laravelValidator = new Validator(new Translator(new ArrayLoader, 'en'), [], []);
         $validator = $this->getMockModelValidator([], ['validator' => $laravelValidator]);
-        $this->assertInstanceOf(Validator::class, $validator->getValidator());
+        $this->assertInstanceOf(Validator::class, $validator->magicCallMethod('getValidator'));
     }
 }

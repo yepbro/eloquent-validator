@@ -64,9 +64,8 @@ abstract class ModelValidator
      * Получить инстанс Laravel-валидатора с заполненными данными
      *
      * @see GetValidatorTest
-     * TODO: may be protected
      */
-    public function getValidator(): Validator
+    protected function getValidator(): Validator
     {
         if (!isset($this->validator)) {
             $this->validator = $this->validatorFactory()->make(
