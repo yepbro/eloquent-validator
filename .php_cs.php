@@ -5,7 +5,7 @@ $finder = (new PhpCsFixer\Finder())
 
 return (new PhpCsFixer\Config())
     ->setRules([
-        '@PSR12' => true,
+        '@PER-CS2.0' => true,
         'new_with_parentheses' => [
             'anonymous_class' => false,
             'named_class' => false,
