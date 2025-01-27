@@ -5,6 +5,7 @@ namespace YepBro\EloquentValidator\Console\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use YepBro\EloquentValidator\Constants;
+
 use function config;
 
 class MakeValidatorCommand extends GeneratorCommand

@@ -8,6 +8,7 @@ use Composer\InstalledVersions;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
 use YepBro\EloquentValidator\Console\Commands\MakeValidatorCommand;
+
 use function config_path;
 
 class EloquentValidatorServiceProvider extends ServiceProvider
