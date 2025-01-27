@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YepBro\EloquentValidator;
@@ -270,9 +271,12 @@ trait HasValidator
      * @throws ModelNotValidated
      */
     public static function incrementOrCreateWithValidation(
-        array $attributes = [], string $column = 'count', $default = 1, $step = 1, array $extra = []
-    ): static
-    {
+        array $attributes = [],
+        string $column = 'count',
+        $default = 1,
+        $step = 1,
+        array $extra = [],
+    ): static {
         $model = new static;
         $model->getModelValidatorInstance()->setData($attributes)->validate();
 

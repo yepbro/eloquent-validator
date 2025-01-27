@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YepBro\EloquentValidator;
@@ -18,7 +19,7 @@ class EloquentValidatorServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        AboutCommand::add('Eloquent Validator Package', fn() => [
+        AboutCommand::add('Eloquent Validator Package', fn () => [
             'Version' => InstalledVersions::getPrettyVersion(Constants::PACKAGE),
         ]);
 

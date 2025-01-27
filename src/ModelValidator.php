@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace YepBro\EloquentValidator;
@@ -44,10 +45,9 @@ abstract class ModelValidator
      */
     public function __construct(
         protected readonly string $modelClass,
-        protected readonly bool   $exists,
+        protected readonly bool $exists,
         protected array $modelData,
-    )
-    {
+    ) {
         //
     }
 
@@ -164,7 +164,7 @@ abstract class ModelValidator
     {
         return array_combine(
             $this->getUsedRulesKeys(),
-            array_map(fn($key) => $this->modelData[$key] ?? null, $this->getUsedRulesKeys()),
+            array_map(fn ($key) => $this->modelData[$key] ?? null, $this->getUsedRulesKeys()),
         );
     }
 
