@@ -6,13 +6,13 @@ services:
       context: ./docker
       dockerfile: Dockerfile
       args:
-        WWWGROUP: '${WWWGROUP}'
+        - WWWUSER=${WWWUSER:-1000}
+        - WWWGROUP=${WWWGROUP:-1000}
     image: ghcr.io/devgine/composer-php:v2-php8.3-alpine
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
     restart: unless-stopped
     container_name: eloquent-validator-php
-    environment:
-      WWWUSER: '${WWWUSER}'
+    working_dir: /var/www/html
     volumes:
       - '.:/var/www/html'
+    tty: true
+    stdin_open: true
