@@ -52,7 +52,7 @@
     "fresh": "vendor/bin/testbench migrate:fresh",
     "seeder": "vendor/bin/testbench migrate:fresh --seeder='\\Workbench\\Database\\Seeders\\DatabaseSeeder'",
     "artisan": "vendor/bin/testbench",
-    "fix": "vendor/bin/php-cs-fixer fix src",
+    "fix": "vendor/bin/php-cs-fixer --config=.php_cs.php --verbose fix",
     "test": "vendor/bin/phpunit tests",
     "unittest": "vendor/bin/phpunit --testsuite Unit",
     "laratest": "vendor/bin/phpunit --testsuite Feature",
