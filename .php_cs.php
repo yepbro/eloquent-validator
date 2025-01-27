@@ -14,4 +14,5 @@ return (new PhpCsFixer\Config())
             'elements' => ['arguments', 'array_destructuring', 'arrays', 'match', 'parameters'],
         ],
     ])
+    ->setCacheFile(__DIR__ . '/.php-cs-fixer.cache')
     ->setFinder($finder);
