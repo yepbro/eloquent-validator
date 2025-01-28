@@ -272,16 +272,54 @@ trait HasValidator
      * @throws ModelNotValidated
      */
     public static function incrementOrCreateWithValidation(
-        array $attributes = [],
+        array  $attributes = [],
         string $column = 'count',
         $default = 1,
         $step = 1,
-        array $extra = [],
+        array  $extra = [],
     ): static {
         $model = new static;
         $model->getModelValidatorInstance()->setData($attributes)->validate();
 
         return $model->incrementOrCreate($attributes, $column, $default, $step, $extra);
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public function saveQuietly(array $options = []): bool
+    {
+        if ($this->hasValidatableInterface()) {
+            $this->validate();
+        }
+        return static::withoutEvents(fn() => $this->save($options));
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function createQuietly(array $attributes = [])
+    {
+        $model = new static;
+        if ($model->hasValidatableInterface()) {
+            $model->fill($attributes)->validate();
+        }
+        return Model::withoutEvents(fn() => $model->create($attributes));
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     * @throws ModelNotValidated
+     */
+    public static function forceCreateQuietly(array $attributes = [])
+    {
+        $model = new static;
+        if ($model->hasValidatableInterface()) {
+            $model->forceFill($attributes)->validate();
+        }
+        return Model::withoutEvents(fn() => $model->forceCreate($attributes));
     }
 
     /**
