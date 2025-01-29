@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Workbench\App\Models\Product;
+use Workbench\App\Models\RuleModel;
 use YepBro\EloquentValidator\EloquentValidatorServiceProvider;
 
 class FeatureTestCase extends \Orchestra\Testbench\TestCase
@@ -27,6 +28,11 @@ class FeatureTestCase extends \Orchestra\Testbench\TestCase
     protected function getProduct(array $attributes = []): Product
     {
         return Product::factory()->create($attributes);
+    }
+
+    public function getRuleModel(mixed $value): RuleModel
+    {
+        return new RuleModel(['field' => $value]);
     }
 
     /**

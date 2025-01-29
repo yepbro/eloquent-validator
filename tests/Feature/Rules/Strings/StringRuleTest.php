@@ -3,14 +3,21 @@
 namespace YepBro\EloquentValidator\Tests\Feature\Rules\Strings;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Str;
+use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
+use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
+use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
-class StringRuleTest extends FeatureTestCase
+class StringRuleTest extends RuleTestCase
 {
     use DatabaseMigrations;
 
-    public function test_ok()
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    public function test_stringable_rule_ok()
     {
-        $this->markTestSkipped();
+        $this->process('string', false);
     }
 }
