@@ -22,7 +22,17 @@ class RuleTestCase extends FeatureTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    protected function process(string $rule, mixed $value): void
+    protected function testSuccess(string $rule, mixed $value): void
+    {
+        $model = $this->getRuleModel($value);
+        $model->getModelValidatorInstance()->setRules(['field' => $rule]);
+        $this->assertTrue($model->validationPasses());
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    protected function testException(string $rule, mixed $value): void
     {
         $model = $this->getRuleModel($value);
 
