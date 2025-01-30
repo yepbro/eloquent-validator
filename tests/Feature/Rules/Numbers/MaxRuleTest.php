@@ -4,15 +4,32 @@ namespace YepBro\EloquentValidator\Tests\Feature\Rules\Numbers;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\TestWith;
+use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
+use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
 #[Group('Rules')]
-class MaxRuleTest extends FeatureTestCase
+#[Group('NumberRules')]
+class MaxRuleTest extends RuleTestCase
 {
     use DatabaseMigrations;
 
-    public function test_ok()
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    public function test_validation_of_incorrect_data_with_a_stringable_rule()
     {
-        $this->markTestSkipped();
+        $this->testException('integer|max:2', 3, 'max.numeric');
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    #[TestWith([1])]
+    #[TestWith([19])]
+    public function test_validation_of_correct_data_with_a_stringable_rule(int $value)
+    {
+        $this->testSuccess('integer|max:19', $value);
     }
 }
