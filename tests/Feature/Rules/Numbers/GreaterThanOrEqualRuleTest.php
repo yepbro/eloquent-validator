@@ -18,11 +18,12 @@ class GreaterThanOrEqualRuleTest extends RuleTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    public function test_validation_of_incorrect_data_with_a_stringable_rule()
+    #[TestWith([4, 5])]
+    public function test_validation_of_incorrect_data_with_a_stringable_rule(int $field, int $other)
     {
         $this->testException('gte:other', [
-            'other' => 5,
-            'field' => 4,
+            'other' => $other,
+            'field' => $field,
         ], 'gte.numeric');
     }
 
