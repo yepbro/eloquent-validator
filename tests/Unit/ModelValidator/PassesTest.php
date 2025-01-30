@@ -13,7 +13,7 @@ use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 #[Group('ModelValidator')]
 class PassesTest extends UnitTestCase
 {
-    #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'int', 'b' => 'string']])]
+    #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'integer', 'b' => 'string']])]
     public function test_success(array $data, array $rules): void
     {
         $validator = $this->getMockModelValidator(['original' => $data], ['rules' => $rules]);

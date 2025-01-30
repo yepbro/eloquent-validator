@@ -163,8 +163,8 @@ abstract class ModelValidator
     protected function getModelData(): array
     {
         return array_combine(
-            $this->getUsedRulesKeys(),
-            array_map(fn($key) => $this->modelData[$key] ?? null, $this->getUsedRulesKeys()),
+            array_keys($this->modelData),
+            array_map(fn($key) => $this->modelData[$key] ?? null, array_keys($this->modelData)),
         );
     }
 

@@ -17,7 +17,7 @@ class ValidateTest extends UnitTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    #[TestWith([['a' => 1.5, 'b' => 's'], ['a' => 'int', 'b' => 'string']])]
+    #[TestWith([['a' => 1.5, 'b' => 's'], ['a' => 'integer', 'b' => 'string']])]
     public function test_exception(array $data, array $rules): void
     {
         $model = $this->getMockModel(['original' => $data], ['rules' => $rules]);

@@ -25,7 +25,7 @@ class WithValidationTest extends UnitTestCase
     public function test_save_exception(string $method): void
     {
         $data = ['a' => 1.5, 'b' => 's'];
-        $rules = ['a' => 'required|int', 'b' => 'required|string'];
+        $rules = ['a' => 'required|integer', 'b' => 'required|string'];
 
         $model = $this->getMockModel(['original' => $data], ['rules' => $rules]);
 
@@ -44,7 +44,7 @@ class WithValidationTest extends UnitTestCase
     public function test_update_exception(string $method): void
     {
         $data = ['a' => 1.5, 'b' => 's'];
-        $rules = ['a' => 'int', 'b' => 'string'];
+        $rules = ['a' => 'integer', 'b' => 'string'];
 
         $model = $this->getMockModel(['original' => [], 'exists' => true], ['rules' => $rules]);
 
@@ -59,7 +59,7 @@ class WithValidationTest extends UnitTestCase
     public function test_fill_exception(string $method): void
     {
         $data = ['a' => 1.5, 'b' => 's'];
-        $rules = ['a' => 'int', 'b' => 'string'];
+        $rules = ['a' => 'integer', 'b' => 'string'];
 
         $model = $this->getMockModel(['original' => []], ['rules' => $rules]);
 

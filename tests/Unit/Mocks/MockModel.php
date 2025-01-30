@@ -10,7 +10,7 @@ class MockModel extends Model
 {
     use MagicalAccessTrait, HasValidator;
 
-    protected $fillable = ['*'];
+    protected $guarded = [];
 
     public function testIsValidatorInit(): bool
     {

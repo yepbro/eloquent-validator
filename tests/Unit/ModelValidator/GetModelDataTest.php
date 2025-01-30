@@ -14,11 +14,11 @@ use YepBro\EloquentValidator\Tests\Unit\UnitTestCase;
 class GetModelDataTest extends UnitTestCase
 {
     #[TestWith([['a' => 1, 'b' => 's'], ['a' => 'required', 'b' => 'required']])]
-    #[TestWith([['a' => 1, 'b' => 2, 'c' => 'x'], ['a' => 'int', 'b' => 'int'], ['a' => 1, 'b' => 2]])]
-    public function test_success(array $data, array $rules, array $expected = []): void
+    #[TestWith([['a' => 1, 'b' => 2, 'c' => 'x'], ['a' => 'integer', 'b' => 'integer']])]
+    public function test_success(array $data, array $rules): void
     {
         $validator = $this->getMockModelValidator(['original' => $data], ['rules' => $rules]);
 
-        $this->assertSame($expected ?: $data, $validator->magicCallMethod('getModelData'));
+        $this->assertSame($data, $validator->magicCallMethod('getModelData'));
     }
 }
