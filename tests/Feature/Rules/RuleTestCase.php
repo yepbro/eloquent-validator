@@ -41,16 +41,8 @@ class RuleTestCase extends FeatureTestCase
 
         $validationMessageKey ??= $rule;
 
-        try {
-            $model->getModelValidatorInstance()->setRules(['field' => $rule]);
-            $model->validate();
-        } catch (ModelNotValidated $e) {
-            $this->assertSame(['field' => ["validation.$validationMessageKey"]], $e->getErrors());
-            $this->catch = true;
-        }
+        $model->getModelValidatorInstance()->setRules(['field' => $rule]);
 
-        if (!$this->catch) {
-            $this->assertTrue($this->catch, 'The model was validated incorrectly.');
-        }
+        $this->assertSame(['field' => ["validation.$validationMessageKey"]], $model->getValidationErrors());
     }
 }
