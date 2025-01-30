@@ -24,7 +24,8 @@ class RuleTestCase extends FeatureTestCase
      */
     protected function testSuccess(string $rule, mixed $value): void
     {
-        $model = $this->getRuleModel($value);
+        $attributes = is_array($value) ? $value : ['field' => $value];
+        $model = $this->getRuleModel($attributes);
         $model->getModelValidatorInstance()->setRules(['field' => $rule]);
         $this->assertTrue($model->validationPasses());
     }
@@ -32,15 +33,19 @@ class RuleTestCase extends FeatureTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    protected function testException(string $rule, mixed $value): void
+    protected function testException(string $rule, mixed $value, string $validationMessageKey = null): void
     {
-        $model = $this->getRuleModel($value);
+        $attributes = is_array($value) ? $value : ['field' => $value];
+
+        $model = $this->getRuleModel($attributes);
+
+        $validationMessageKey ??= $rule;
 
         try {
             $model->getModelValidatorInstance()->setRules(['field' => $rule]);
             $model->validate();
         } catch (ModelNotValidated $e) {
-            $this->assertSame(['field' => ["validation.$rule"]], $e->getErrors());
+            $this->assertSame(['field' => ["validation.$validationMessageKey"]], $e->getErrors());
             $this->catch = true;
         }
 

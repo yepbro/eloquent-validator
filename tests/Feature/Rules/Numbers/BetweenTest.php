@@ -10,7 +10,7 @@ use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
 #[Group('Rules')]
 #[Group('NumberRules')]
-class IntegerRuleTest extends RuleTestCase
+class BetweenTest extends RuleTestCase
 {
     use DatabaseMigrations;
 
@@ -19,7 +19,7 @@ class IntegerRuleTest extends RuleTestCase
      */
     public function test_validation_of_incorrect_data_with_a_stringable_rule()
     {
-        $this->testException('integer', false);
+        $this->testException('integer|between:1,5', 10, 'between.numeric');
     }
 
     /**
@@ -27,6 +27,6 @@ class IntegerRuleTest extends RuleTestCase
      */
     public function test_validation_of_correct_data_with_a_stringable_rule()
     {
-        $this->testSuccess('integer', 10);
+        $this->testSuccess('between:1,5', 4);
     }
 }

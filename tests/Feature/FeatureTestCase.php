@@ -30,9 +30,9 @@ class FeatureTestCase extends \Orchestra\Testbench\TestCase
         return Product::factory()->create($attributes);
     }
 
-    public function getRuleModel(mixed $value): RuleModel
+    public function getRuleModel(array $attributes): RuleModel
     {
-        return new RuleModel(['field' => $value]);
+        return new RuleModel($attributes);
     }
 
     /**
