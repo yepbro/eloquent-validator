@@ -34,7 +34,8 @@
     "phpstan/phpstan": "2.1.x-dev",
     "orchestra/testbench": "10.x-dev",
     "friendsofphp/php-cs-fixer": "dev-master",
-    "laravel/tinker": "dev-develop"
+    "laravel/tinker": "dev-develop",
+    "symfony/var-dumper": "7.3.x-dev"
   },
   "autoload": {
     "psr-4": {
