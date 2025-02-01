@@ -9,7 +9,7 @@ use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
 #[Group('Rules')]
-#[Group('BooleanRules')]
+#[Group('ArrayRules')]
 class InArrayRuleTest extends RuleTestCase
 {
     use DatabaseMigrations;
