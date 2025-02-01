@@ -31,6 +31,6 @@ class ArrayRuleTest extends RuleTestCase
     #[TestWith([[1, 'string']])]
     public function test_validation_of_correct_data_with_a_stringable_rule(mixed $value): void
     {
-        $this->testSuccess('array', $value);
+        $this->testSuccess('array', ['field' => $value]);
     }
 }
