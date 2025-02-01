@@ -29,7 +29,7 @@ class AlphaDashRuleTest extends RuleTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    #[TestWith(['aaa-g_g'])]
+    #[TestWith(['aaa-g1_g'])]
     #[TestWith(['про_вер_ка-два'])]
     #[TestWith(['test_gg', ':ascii'])]
     public function test_validation_of_correct_data_with_a_stringable_rule(mixed $value, string $param = '')
