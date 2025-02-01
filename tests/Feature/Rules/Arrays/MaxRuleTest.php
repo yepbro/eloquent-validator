@@ -3,14 +3,33 @@
 namespace YepBro\EloquentValidator\Tests\Feature\Rules\Arrays;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\TestWith;
+use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
+use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
-class MaxRuleTest extends FeatureTestCase
+#[Group('Rules')]
+#[Group('ArrayRules')]
+class MaxRuleTest extends RuleTestCase
 {
     use DatabaseMigrations;
 
-    public function test_ok()
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    #[TestWith([[1, 2, 3]])]
+    public function test_validation_of_incorrect_data_with_a_stringable_rule(mixed $value): void
     {
-        $this->markTestSkipped();
+        $this->testException('array|max:2', ['field' => $value], 'max.array');
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    #[TestWith([[1]])]
+    #[TestWith([[1, 2]])]
+    public function test_validation_of_correct_data_with_a_stringable_rule(mixed $value): void
+    {
+        $this->testSuccess('array|max:2', ['field' => $value]);
     }
 }
