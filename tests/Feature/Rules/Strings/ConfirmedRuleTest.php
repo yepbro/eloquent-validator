@@ -9,8 +9,8 @@ class ConfirmedRuleTest extends FeatureTestCase
 {
     use DatabaseMigrations;
 
-    public function test_ok()
+    public function test_skip()
     {
-        $this->markTestSkipped();
+        $this->markTestSkipped('The validation rule is not applicable to models.');
     }
 }
