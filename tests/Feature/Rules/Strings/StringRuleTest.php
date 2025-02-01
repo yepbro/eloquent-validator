@@ -11,6 +11,7 @@ use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
 use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
 #[Group('Rules')]
+#[Group('StringRules')]
 class StringRuleTest extends RuleTestCase
 {
     use DatabaseMigrations;
@@ -28,6 +29,6 @@ class StringRuleTest extends RuleTestCase
      */
     public function test_validation_of_correct_data_with_a_stringable_rule()
     {
-        $this->testSuccess('integer', 10);
+        $this->testSuccess('string', 'my string');
     }
 }
