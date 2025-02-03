@@ -1,5 +1,7 @@
 # Eloquent Validator
 
+![Tests](https://github.com/yepbro/eloquent-validator/actions/workflows/tests.yml/badge.svg)
+
 ## Getting Started
 
 ### Requirements
