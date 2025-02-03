@@ -34,3 +34,9 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+
+    - name: Run phpstan
+      run: composer run-script phpstan
+
+    - name: Run php-cs-fixer
+      run: composer run-script dry-fix
