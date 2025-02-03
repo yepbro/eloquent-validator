@@ -7,9 +7,11 @@ ARG WWWUSER=1000
 
 WORKDIR /var/www/html
 
+USER root
+
 RUN apk add --no-cache bash shadow && \
-    addgroup -g $WWWGROUP sail && \
-    adduser -u $WWWUSER -S -G sail sail && \
+    getent group sail >/dev/null || addgroup -g $WWWGROUP sail && \
+    getent passwd sail >/dev/null || adduser -u $WWWUSER -S -G sail sail && \
     chown -R $WWWUSER:$WWWGROUP /var/www/html
 
 USER $WWWUSER
