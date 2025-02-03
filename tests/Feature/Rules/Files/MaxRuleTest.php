@@ -14,6 +14,6 @@ class MaxRuleTest extends FeatureTestCase
 
     public function test_skip()
     {
-        $this->markTestSkipped('The validation rule is not applicable to models.');
+        $this->markTestIncomplete('The validation rule is not applicable to models.');
     }
 }

@@ -14,11 +14,11 @@ class DistinctRuleTest extends RuleTestCase
 
     public function test_validation_of_incorrect_data_with_a_stringable_rule(): void
     {
-        $this->markTestSkipped('The validation rule is not applicable to models.');
+        $this->markTestIncomplete('The validation rule is not applicable to models.');
     }
 
     public function test_validation_of_correct_data_with_a_stringable_rule(): void
     {
-        $this->markTestSkipped('The validation rule is not applicable to models.');
+        $this->markTestIncomplete('The validation rule is not applicable to models.');
     }
 }
