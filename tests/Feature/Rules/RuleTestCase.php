@@ -2,9 +2,7 @@
 
 namespace YepBro\EloquentValidator\Tests\Feature\Rules;
 
-use PHPUnit\Framework\Attributes\TestDox;
 use Workbench\App\Models\RuleModel;
-use YepBro\EloquentValidator\Exceptions\ModelNotValidated;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
 
@@ -28,7 +26,7 @@ class RuleTestCase extends FeatureTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    protected function testSuccess(string $rule, mixed $value): void
+    protected function testSuccess(mixed $rule, mixed $value): void
     {
         $attributes = is_array($value) ? $value : ['field' => $value];
         $model = $this->getRuleModel($attributes);
@@ -39,12 +37,12 @@ class RuleTestCase extends FeatureTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    protected function testException(string $rule, mixed $value, string $validationMessageKey = null): void
+    protected function testException(mixed $rule, mixed $value, string $validationMessageKey = null, string $message = null): void
     {
         $attributes = is_array($value) ? $value : ['field' => $value];
         $model = $this->getRuleModel($attributes);
         $validationMessageKey ??= $rule;
         $model->getModelValidatorInstance()->setRules(['field' => $rule]);
-        $this->assertSame(['field' => ["validation.$validationMessageKey"]], $model->getValidationErrors());
+        $this->assertSame(['field' => [$message ?: "validation.$validationMessageKey"]], $model->getValidationErrors());
     }
 }
