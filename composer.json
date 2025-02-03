@@ -63,7 +63,7 @@
     "laratest": "vendor/bin/phpunit --testsuite Feature",
     "testdox": "vendor/bin/phpunit tests --no-progress --testdox",
     "coverage-text": "vendor/bin/phpunit tests --coverage-text",
-    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon -l 10",
+    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
     "post-autoload-dump": [
       "@clear",
       "@prepare"
