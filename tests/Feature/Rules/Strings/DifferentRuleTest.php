@@ -1,12 +1,11 @@
 <?php
 
-namespace Feature\Rules\Strings;
+namespace YepBro\EloquentValidator\Tests\Feature\Rules\Strings;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\TestWith;
 use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
-use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
 use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
 #[Group('Rules')]
