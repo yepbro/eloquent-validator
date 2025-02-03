@@ -28,8 +28,8 @@ class StartsWithRuleTest extends RuleTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    #[TestWith(['start foo end'])]
-    #[TestWith(['no bar end'])]
+    #[TestWith(['foo end'])]
+    #[TestWith(['bar end'])]
     public function test_validation_of_correct_data_with_a_stringable_rule(mixed $value)
     {
         $this->testSuccess('starts_with:foo,bar', $value);
