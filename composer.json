@@ -17,6 +17,9 @@
     "laravel",
     "validation"
   ],
+  "config": {
+    "cache-dir": "./.composer-cache"
+  },
   "minimum-stability": "dev",
   "require": {
     "php": "^8.3",
