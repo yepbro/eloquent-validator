@@ -9,7 +9,8 @@ WORKDIR /var/www/html
 
 USER root
 
-RUN apk add --no-cache bash shadow && \
+RUN apk add --no-cache bash shadow icu-data-full icu-dev && \
+    docker-php-ext-install intl && \
     getent group sail >/dev/null || addgroup -g $WWWGROUP sail && \
     getent passwd sail >/dev/null || adduser -u $WWWUSER -S -G sail sail && \
     chown -R $WWWUSER:$WWWGROUP /var/www/html
