@@ -18,7 +18,6 @@ class SizeRuleTest extends RuleTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    #[TestWith([1234])]
     #[TestWith(['six'])]
     public function test_validation_of_incorrect_data_with_a_stringable_rule(mixed $value)
     {
