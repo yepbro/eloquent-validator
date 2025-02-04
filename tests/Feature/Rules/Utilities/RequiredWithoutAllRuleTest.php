@@ -3,14 +3,41 @@
 namespace YepBro\EloquentValidator\Tests\Feature\Rules\Utilities;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\TestWith;
+use YepBro\EloquentValidator\Exceptions\ModelValidatorNotFound;
 use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
+use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
-class RequiredWithoutAllRuleTest extends FeatureTestCase
+#[Group('Rules')]
+#[Group('UtilityRules')]
+class RequiredWithoutAllRuleTest extends RuleTestCase
 {
     use DatabaseMigrations;
 
-    public function test_ok()
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    #[TestWith(['ten'])]
+    public function test_validation_of_incorrect_data_with_a_stringable_rule(mixed $value)
     {
-        $this->markTestSkipped();
+        $this->testException('required_without_all:other,another', [
+            'field' => null,
+            'other' => null,
+            'another' => null,
+        ], 'required_without_all');
+    }
+
+    /**
+     * @throws ModelValidatorNotFound
+     */
+    #[TestWith(['ten'])]
+    public function test_validation_of_correct_data_with_a_stringable_rule(mixed $value)
+    {
+        $this->testSuccess('required_without_all:other,another', [
+            'field' => $value,
+            'other' => null,
+            'another' => null,
+        ]);
     }
 }
