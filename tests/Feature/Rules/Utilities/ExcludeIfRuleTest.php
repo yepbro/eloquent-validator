@@ -3,14 +3,16 @@
 namespace YepBro\EloquentValidator\Tests\Feature\Rules\Utilities;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
 use YepBro\EloquentValidator\Tests\Feature\FeatureTestCase;
+use YepBro\EloquentValidator\Tests\Feature\Rules\RuleTestCase;
 
-class ExcludeIfRuleTest extends FeatureTestCase
+#[Group('Rules')]
+#[Group('UtilityRules')]
+class ExcludeIfRuleTest extends RuleTestCase
 {
-    use DatabaseMigrations;
-
-    public function test_ok()
+    public function test_skip()
     {
-        $this->markTestSkipped();
+        $this->markTestIncomplete('The validation rule is not applicable to models.');
     }
 }
