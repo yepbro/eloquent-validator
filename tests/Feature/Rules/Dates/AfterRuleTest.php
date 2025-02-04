@@ -18,7 +18,7 @@ class AfterRuleTest extends RuleTestCase
     /**
      * @throws ModelValidatorNotFound
      */
-    #[TestWith(['2024-12-22'])]
+    #[TestWith(['2024-12-23'])]
     #[TestWith(['2024-12-12'])]
     public function test_validation_of_incorrect_data_with_a_stringable_rule(mixed $value)
     {
